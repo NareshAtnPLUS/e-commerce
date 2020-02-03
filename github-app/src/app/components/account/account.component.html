@@ -1,0 +1,15 @@
+
+<div class="container tab-container">
+    <mat-tab-group [color]="colorToggle.value" [backgroundColor]="backgroundColorToggle.value" [selectedIndex]="1">
+        <mat-tab class="container" label="Register">
+            <h1 class="tab-header">Register to the API.</h1>
+            <app-register></app-register>
+        </mat-tab>
+        <mat-tab class="tab-content" label="Login">
+            <h1 class="tab-header">Login.</h1>
+            <app-login></app-login>
+        </mat-tab>
+    </mat-tab-group>
+
+    {{ profile | json }}
+</div>
