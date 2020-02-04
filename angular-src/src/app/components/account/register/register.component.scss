@@ -1,0 +1,15 @@
+.reg-full-width {
+    width: 70%;
+}
+.reg-half-width {
+    width: 100%;
+}
+.reg-container{
+    margin: auto;
+    width: 80%;
+    padding: 2rem;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+}

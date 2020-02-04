@@ -1,0 +1,35 @@
+<div class="container">
+    <h1 class="tab-header">Register to the API.</h1>
+    <form [formGroup]="profileForm" (ngSubmit)="onRegisterSubmit()">
+        <div class="row">
+            <mat-form-field appearance="outline" class="reg-half-width" class="col-xl-6">
+                <mat-label>First Name</mat-label>
+                <input matInput type="text" formControlName="firstName" name="firstName" class="form-control" id="firstName" placeholder="First Name" required>
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field appearance="outline"  class="reg-half-width" class="col-xl-6">
+                <mat-label>Last Name</mat-label>
+                <input matInput type="text" formControlName="lastName" name="lastName" class="form-control" id="lastName" placeholder="Last Name" required>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline"  class="reg-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="text" formControlName="email" name="email" class="form-control" id="email" placeholder="Email" required>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="reg-full-width">
+                <mat-label>User Name</mat-label>
+                <input matInput type="text" formControlName="userName" name="userName" class="form-control" id="userName" required>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="reg-full-width">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password" name="password" class="form-control" id="password" required>
+            </mat-form-field>
+        </div>
+        <button type="submit" [disabled]="!profileForm.valid" mat-raised-button color="primary">Register &nbsp;&nbsp;<i class="material-icons">input</i></button>
+    </form>
+</div>
