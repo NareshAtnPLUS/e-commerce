@@ -35,7 +35,7 @@ export class LoginComponent {
     this.user = this.loginForm.value;
     const req = this.http.post<Res>('http://localhost:3000/users/authenticate', this.user).subscribe(
       res => {
-        console.log(res.success,res.msg);
+        // console.log(res.success,res.msg);
         if (res.success) {
           this.authService.storeUserData(res.msg, res.user);
           this.flashMessage.showFlashMessage({
@@ -43,7 +43,7 @@ export class LoginComponent {
           dismissible: true, timeout: 3000, type: 'success'
           });
         this.router.navigate(['/profile']);
-        console.log(res.msg, res.user);
+        //console.log(res.msg, res.user);
         } else {
           this.flashMessage.showFlashMessage({
             messages: ['Check Login Credentials,User Name or password mismatch'],
@@ -53,14 +53,14 @@ export class LoginComponent {
         }
       },
       err => {
-        console.log('Error Occured');
+        // console.log('Error Occured');
         this.flashMessage.showFlashMessage({
           messages: ['Something Went Wrong'],
           dismissible: true, timeout: 3000, type: 'danger'
           });
         this.router.navigate(['/account']);
      });
-    console.log(this.user)
+    // console.log(this.user)
 
   }
 

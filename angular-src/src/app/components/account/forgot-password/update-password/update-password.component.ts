@@ -43,7 +43,7 @@ export class UpdatePasswordComponent implements OnInit {
         userName: this.authService.getUpdateToken(),
         password:this.updatePasswordForm.value,
       }
-      (this.user)
+      // console.log(this.user)
       const req = this.http.post<Res>('http://localhost:3000/users/update-password', this.user).subscribe(
       res => {
         if (res.success) {

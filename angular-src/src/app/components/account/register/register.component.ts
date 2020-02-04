@@ -51,10 +51,10 @@ export class RegisterComponent  {
       })
       return false      
     }
-    console.log(this.user);
+    // console.log(this.user);
     const req = this.http.post('http://localhost:3000/users/register', this.user).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
         this.flashMessage.showFlashMessage({
           messages: ['You Are Now Registered and can Login'],
           dismissible: true, timeout: 3000, type: 'success'
