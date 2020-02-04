@@ -18,7 +18,6 @@ export class GithubService{
       private http:HttpClient,
       private authService:AuthService
       ){
-        console.log('Github Service Init...');
     }
     
     getUser(userName){

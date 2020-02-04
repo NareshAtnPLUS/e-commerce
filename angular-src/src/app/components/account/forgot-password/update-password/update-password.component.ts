@@ -7,7 +7,6 @@ import { NgFlashMessageService } from 'ng-flash-messages';
 import { Router } from '@angular/router';
 interface Res{
   success:boolean,
-  user:string,
   msg:string,
 }
 @Component({
@@ -47,24 +46,22 @@ export class UpdatePasswordComponent implements OnInit {
       console.log(this.user)
       const req = this.http.post<Res>('http://localhost:3000/users/update-password', this.user).subscribe(
       res => {
-        console.log(res.success);
         if (res.success) {
           this.flashMessage.showFlashMessage({
-          messages: ['Password has been Changed'],
+          messages: [res.msg],
           dismissible: true, timeout: 3000, type: 'success'
           });
         this.router.navigate(['/account/login']);
-        console.log(res.msg, res.user);
         } else {
           this.flashMessage.showFlashMessage({
-            messages: ['Re enter the passwords again!, passwords mismatch'],
+            messages: [res.msg],
           dismissible: true, timeout: 5000, type: 'danger'
           });
           this.router.navigate(['/account/forgot-password/update-password']);
         }
       },
       err => {
-        console.log('Error Occured');
+
         this.flashMessage.showFlashMessage({
           messages: ['Something Went Wrong'],
           dismissible: true, timeout: 3000, type: 'danger'
@@ -72,8 +69,6 @@ export class UpdatePasswordComponent implements OnInit {
         this.router.navigate(['/account/register']);
      });
       
-    } else {
-      console.log('passwords mismatch')
     }
   }
 

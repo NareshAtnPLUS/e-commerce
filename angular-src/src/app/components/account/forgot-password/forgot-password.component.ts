@@ -34,7 +34,7 @@ export class ForgotPasswordComponent {
     this.user = this.forgotForm.value;
     const req = this.http.post<Res>('http://localhost:3000/users/request-otp', this.user).subscribe(
       res => {
-        console.log(res.success);
+        // console.log(res.success);
         if (res.success) {
           this.authService.sendTokenUpdatePassword(res.user);
           this.flashMessage.showFlashMessage({
@@ -42,7 +42,7 @@ export class ForgotPasswordComponent {
           dismissible: true, timeout: 3000, type: 'success'
           });
         this.router.navigate(['/account/forgot-password/otp']);
-        console.log(res.token, res.user);
+        // console.log(res.token, res.user);
         } else {
           this.flashMessage.showFlashMessage({
             messages: ['Username does not exists!,Please register yourself as a valid User'],
@@ -52,7 +52,7 @@ export class ForgotPasswordComponent {
         }
       },
       err => {
-        console.log('Error Occured');
+        // console.log('Error Occured');
         this.flashMessage.showFlashMessage({
           messages: ['Something Went Wrong'],
           dismissible: true, timeout: 3000, type: 'danger'

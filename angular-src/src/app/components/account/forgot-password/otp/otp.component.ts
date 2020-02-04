@@ -36,10 +36,10 @@ export class OtpComponent implements OnInit {
   onOtpSubmit(){
     this.otp = this.otpForm.value
     this.otp.userName = this.authService.getUpdateToken()
-    console.log(this.otp)
+    // console.log(this.otp)
     const req = this.http.post<Res>('http://localhost:3000/users/verify-otp', this.otp).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
         if (res.success) {
           this.authService.storeUserData(res.msg, res.user);
           this.flashMessage.showFlashMessage({
@@ -47,7 +47,7 @@ export class OtpComponent implements OnInit {
           dismissible: true, timeout: 3000, type: 'success'
           });
         this.router.navigate(['/account/forgot-password/update-password']);
-        console.log(res.msg, res.user);
+        // console.log(res.msg, res.user);
         } else {
           this.flashMessage.showFlashMessage({
             messages: ['Username does not exists!,Please register yourself as a valid User'],
@@ -57,7 +57,7 @@ export class OtpComponent implements OnInit {
         }
       },
       err => {
-        console.log('Error Occured');
+        // console.log('Error Occured');
         this.flashMessage.showFlashMessage({
           messages: ['Something Went Wrong'],
           dismissible: true, timeout: 3000, type: 'danger'

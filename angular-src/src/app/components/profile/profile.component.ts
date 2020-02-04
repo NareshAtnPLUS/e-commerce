@@ -27,11 +27,10 @@ export class ProfileComponent implements OnInit {
   }
   onSubmit(){
     const { userName } = this.profileSearchForm.value
-    console.log(userName)
     this.githubService.getUser(userName).subscribe(users => {
-      console.log('undefined',users);        
+
       this.githubUsers = users.items
-      console.log('github Users',this.githubUsers)  
+
     })
   }
   

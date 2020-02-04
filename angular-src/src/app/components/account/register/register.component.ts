@@ -17,6 +17,7 @@ export class RegisterComponent  {
     userName:['',Validators.minLength(8)],
     email:['',Validators.required],
     password:['',Validators.minLength(8)],
+    confirmPassword:['',Validators.minLength(8)],
   })
   user:{
     firstName:string;
@@ -42,6 +43,13 @@ export class RegisterComponent  {
         dismissible: true, timeout: 3000, type: 'danger'
       })
       return false
+    }
+    if(!(this.registerService.validateUpdatePassword(this.profileForm.value))){
+      this.flashMessage.showFlashMessage({
+        messages:['Passwords mismatch!,ReEnter with care'],
+        dismissible: true, timeout: 3000, type: 'danger'
+      })
+      return false      
     }
     console.log(this.user);
     const req = this.http.post('http://localhost:3000/users/register', this.user).subscribe(

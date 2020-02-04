@@ -82,17 +82,25 @@ user.post('/update-password',(req,res) => {
     const password = req.body.password.password;
     const confirmPassword = req.body.password.confirmPassword;
     const userName = req.body.userName
-
-    User.findOneAndUpdate({userName},{password},(err,user)=> {
-        if(err) throw err;
-        else{
-            return res.json({
-                success:true,
-                user:userName,
-                msg:"Password Changed Successfull"
+    let gUser={};
+    User.updatePassword(password,(hashedPassword)=>{
+        if(hashedPassword){
+            User.findOneAndUpdate({userName},{password:hashedPassword},(err,data)=>{
+                if(!err){
+                    console.log(data)
+                    res.json({
+                        success:true,
+                        msg:"Password changed Successfully"
+                    })
+                } else{
+                    res.json({
+                        success:false,
+                        msg:"Password Updation failed"
+                    })
+                }
             })
         }
-    });
+    })
 });
 user.post('/request-otp',(req, res, next) => {
     const username = req.body.userName;

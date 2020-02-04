@@ -30,6 +30,12 @@
                 <input matInput type="password" formControlName="password" name="password" class="form-control" id="password" required>
             </mat-form-field>
         </div>
+        <div class="row">
+            <mat-form-field appearance="outline" class="reg-full-width">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput type="password" formControlName="confirmPassword" name="password" class="form-control" id="confirmPassword" required>
+            </mat-form-field>
+        </div>
         <button type="submit" [disabled]="!profileForm.valid" mat-raised-button color="primary">Register &nbsp;&nbsp;<i class="material-icons">input</i></button>
     </form>
 </div>

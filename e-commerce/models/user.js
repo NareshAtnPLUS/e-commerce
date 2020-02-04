@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const config = require('../config/database');
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const UserSchema = mongoose.Schema({
     firstName:{
         type:String,
@@ -38,21 +38,27 @@ module.exports.getUserById = function(id,callback){
     User.findById(id,callback);
 }
 module.exports.addUser = function(newUser, callback){
-    newUser.save(callback);
+    bcrypt.hash(newUser.password, saltRounds, function(err, hash) {
+        // Store hash in your password DB.
+        if(!err){
+            newUser.password = hash
+            console.log('schem',newUser)
+            newUser.save(callback(null,true));
+        }
+        else{
+            console.log(err)
+        }
+      });
+    
+}
+module.exports.updatePassword = function(password,callback){
+    bcrypt.hash(password,saltRounds,(err,hash)=>{
+        callback(hash)
+    })
 }
 module.exports.comparePassword = function(candidatePassword,hash,callback){
-    if(candidatePassword == hash){
-        console.log('passwords mathed')
-        callback(null,true)
-    }
-}
-module.exports.updatePassword = function(user,callback){
-    bcrypt.genSalt(10, (err,salt) => {
-        bcrypt.hash(user.password, salt, (err,hash) => {
-            if (err) throw err;
-            user.password = hash;
-            console.log(user.password)
-            callback(user.password);
-        });
+    bcrypt.compare(candidatePassword, hash, function(err, res) {
+        // res == true
+        callback(null,res);
     });
 }
