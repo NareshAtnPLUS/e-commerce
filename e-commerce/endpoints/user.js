@@ -18,7 +18,7 @@ user.post('/register',(req, res, next) => {
         userName:req.body.userName,
         password:req.body.password,
     });
-    console.log(req.body.name)
+    // console.log(req.body.name)
     User.addUser(newUser, (err,user) =>{
         if (err){
             res.json({success:false,msg:'Failed to register user'});
@@ -32,10 +32,10 @@ user.post('/register',(req, res, next) => {
 user.post('/authenticate',(req, res, next) => {
     const username = req.body.userName;
     const password = req.body.password;
-    console.log(username,'password',password)
+    // console.log(username,'password',password)
     User.getUserByUsername(username, (err,user) =>{
         if (err) throw err;
-        console.log(user)
+        // console.log(user)
         if (!user) {
             return res.json({success:false,msg:'User not Found'});
         }
@@ -60,7 +60,7 @@ user.post('/authenticate',(req, res, next) => {
             }
         });
     });
-    console.log(req.user);
+    // console.log(req.user);
 
 });
 user.post('/verify-otp',(req,res,next) => {
@@ -87,7 +87,7 @@ user.post('/update-password',(req,res) => {
         if(hashedPassword){
             User.findOneAndUpdate({userName},{password:hashedPassword},(err,data)=>{
                 if(!err){
-                    console.log(data)
+                    // console.log(data)
                     res.json({
                         success:true,
                         msg:"Password changed Successfully"
@@ -109,12 +109,12 @@ user.post('/request-otp',(req, res, next) => {
         if (err) throw err;
         if (user) {
             const token = totp.generate(secret);
-            console.log(token)
+            // console.log(token)
             const isValid = totp.check(token, secret);
-            console.log(isValid)
+            // console.log(isValid)
             const isValidVerify = totp.verify({ token, secret });
-            console.log(isValidVerify)
-            console.log(user.email,user.userName);            
+            // console.log(isValidVerify)
+            // console.log(user.email,user.userName);            
             const mailContent = `
                 <p>You have a requested a updation of Password</p>
                 <h3>OTP: ${token}</h3>
@@ -124,7 +124,7 @@ user.post('/request-otp',(req, res, next) => {
                 User.findOneAndUpdate({userName:user.userName},{otp:token},(err,data)=>{
                     if (err) throw err;
                     else{
-                        console.log(data);
+                        // console.log(data);
                         return res.json({
                             success:true,
                             user:user.userName,  
@@ -133,12 +133,12 @@ user.post('/request-otp',(req, res, next) => {
                     }
                 })
             })
-            .catch(console.error());
+            // .catch(console.error());
         }else{
             return res.json({success:false,msg:'User not Found'});
         }
     });
-    console.log(req.user);
+    // console.log(req.user);
 });
 async function sendEmailToUser(email,mailContent,cb) {
     // create reusable transporter object using the default SMTP transport
@@ -164,11 +164,11 @@ async function sendEmailToUser(email,mailContent,cb) {
       html: mailContent // html body
     });
   
-    console.log("Message sent: %s", info.messageId);
+    // console.log("Message sent: %s", info.messageId);
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
   
     // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     cb();
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }

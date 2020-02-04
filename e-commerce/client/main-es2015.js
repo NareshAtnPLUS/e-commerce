@@ -110,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n    <h1 class=\"tab-header\">Register to the API.</h1>\n    <form [formGroup]=\"profileForm\" (ngSubmit)=\"onRegisterSubmit()\">\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-half-width\" class=\"col-xl-6\">\n                <mat-label>First Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"firstName\" name=\"firstName\" class=\"form-control\" id=\"firstName\" placeholder=\"First Name\" required>\n            </mat-form-field>\n            &nbsp;\n            <mat-form-field appearance=\"outline\"  class=\"reg-half-width\" class=\"col-xl-6\">\n                <mat-label>Last Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"lastName\" name=\"lastName\" class=\"form-control\" id=\"lastName\" placeholder=\"Last Name\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\"  class=\"reg-full-width\">\n                <mat-label>Email</mat-label>\n                <input matInput type=\"text\" formControlName=\"email\" name=\"email\" class=\"form-control\" id=\"email\" placeholder=\"Email\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>User Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"userName\" name=\"userName\" class=\"form-control\" id=\"userName\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>Password</mat-label>\n                <input matInput type=\"password\" formControlName=\"password\" name=\"password\" class=\"form-control\" id=\"password\" required>\n            </mat-form-field>\n        </div>\n        <button type=\"submit\" [disabled]=\"!profileForm.valid\" mat-raised-button color=\"primary\">Register &nbsp;&nbsp;<i class=\"material-icons\">input</i></button>\n    </form>\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n    <h1 class=\"tab-header\">Register to the API.</h1>\n    <form [formGroup]=\"profileForm\" (ngSubmit)=\"onRegisterSubmit()\">\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-half-width\" class=\"col-xl-6\">\n                <mat-label>First Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"firstName\" name=\"firstName\" class=\"form-control\" id=\"firstName\" placeholder=\"First Name\" required>\n            </mat-form-field>\n            &nbsp;\n            <mat-form-field appearance=\"outline\"  class=\"reg-half-width\" class=\"col-xl-6\">\n                <mat-label>Last Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"lastName\" name=\"lastName\" class=\"form-control\" id=\"lastName\" placeholder=\"Last Name\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\"  class=\"reg-full-width\">\n                <mat-label>Email</mat-label>\n                <input matInput type=\"text\" formControlName=\"email\" name=\"email\" class=\"form-control\" id=\"email\" placeholder=\"Email\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>User Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"userName\" name=\"userName\" class=\"form-control\" id=\"userName\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>Password</mat-label>\n                <input matInput type=\"password\" formControlName=\"password\" name=\"password\" class=\"form-control\" id=\"password\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>Confirm Password</mat-label>\n                <input matInput type=\"password\" formControlName=\"confirmPassword\" name=\"password\" class=\"form-control\" id=\"confirmPassword\" required>\n            </mat-form-field>\n        </div>\n        <button type=\"submit\" [disabled]=\"!profileForm.valid\" mat-raised-button color=\"primary\">Register &nbsp;&nbsp;<i class=\"material-icons\">input</i></button>\n    </form>\n</div>");
 
 /***/ }),
 
@@ -718,7 +718,7 @@ let ForgotPasswordComponent = class ForgotPasswordComponent {
     onForgotSubmit() {
         this.user = this.forgotForm.value;
         const req = this.http.post('http://localhost:3000/users/request-otp', this.user).subscribe(res => {
-            console.log(res.success);
+            // console.log(res.success);
             if (res.success) {
                 this.authService.sendTokenUpdatePassword(res.user);
                 this.flashMessage.showFlashMessage({
@@ -726,7 +726,7 @@ let ForgotPasswordComponent = class ForgotPasswordComponent {
                     dismissible: true, timeout: 3000, type: 'success'
                 });
                 this.router.navigate(['/account/forgot-password/otp']);
-                console.log(res.token, res.user);
+                // console.log(res.token, res.user);
             }
             else {
                 this.flashMessage.showFlashMessage({
@@ -736,7 +736,7 @@ let ForgotPasswordComponent = class ForgotPasswordComponent {
                 this.router.navigate(['/account/register']);
             }
         }, err => {
-            console.log('Error Occured');
+            // console.log('Error Occured');
             this.flashMessage.showFlashMessage({
                 messages: ['Something Went Wrong'],
                 dismissible: true, timeout: 3000, type: 'danger'
@@ -818,9 +818,9 @@ let OtpComponent = class OtpComponent {
     onOtpSubmit() {
         this.otp = this.otpForm.value;
         this.otp.userName = this.authService.getUpdateToken();
-        console.log(this.otp);
+        // console.log(this.otp)
         const req = this.http.post('http://localhost:3000/users/verify-otp', this.otp).subscribe(res => {
-            console.log(res);
+            // console.log(res);
             if (res.success) {
                 this.authService.storeUserData(res.msg, res.user);
                 this.flashMessage.showFlashMessage({
@@ -828,7 +828,7 @@ let OtpComponent = class OtpComponent {
                     dismissible: true, timeout: 3000, type: 'success'
                 });
                 this.router.navigate(['/account/forgot-password/update-password']);
-                console.log(res.msg, res.user);
+                // console.log(res.msg, res.user);
             }
             else {
                 this.flashMessage.showFlashMessage({
@@ -838,7 +838,7 @@ let OtpComponent = class OtpComponent {
                 this.router.navigate(['/account/register']);
             }
         }, err => {
-            console.log('Error Occured');
+            // console.log('Error Occured');
             this.flashMessage.showFlashMessage({
                 messages: ['Something Went Wrong'],
                 dismissible: true, timeout: 3000, type: 'danger'
@@ -931,33 +931,27 @@ let UpdatePasswordComponent = class UpdatePasswordComponent {
             };
             console.log(this.user);
             const req = this.http.post('http://localhost:3000/users/update-password', this.user).subscribe(res => {
-                console.log(res.success);
                 if (res.success) {
                     this.flashMessage.showFlashMessage({
-                        messages: ['Password has been Changed'],
+                        messages: [res.msg],
                         dismissible: true, timeout: 3000, type: 'success'
                     });
                     this.router.navigate(['/account/login']);
-                    console.log(res.msg, res.user);
                 }
                 else {
                     this.flashMessage.showFlashMessage({
-                        messages: ['Re enter the passwords again!, passwords mismatch'],
+                        messages: [res.msg],
                         dismissible: true, timeout: 5000, type: 'danger'
                     });
                     this.router.navigate(['/account/forgot-password/update-password']);
                 }
             }, err => {
-                console.log('Error Occured');
                 this.flashMessage.showFlashMessage({
                     messages: ['Something Went Wrong'],
                     dismissible: true, timeout: 3000, type: 'danger'
                 });
                 this.router.navigate(['/account/register']);
             });
-        }
-        else {
-            console.log('passwords mismatch');
         }
     }
 };
@@ -1132,6 +1126,7 @@ let RegisterComponent = class RegisterComponent {
             userName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(8)],
             email: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(8)],
+            confirmPassword: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(8)],
         });
     }
     onRegisterSubmit() {
@@ -1139,6 +1134,13 @@ let RegisterComponent = class RegisterComponent {
         if (!this.registerService.validateEmail(this.user.email)) {
             this.flashMessage.showFlashMessage({
                 messages: ['Please Use Valid Email'],
+                dismissible: true, timeout: 3000, type: 'danger'
+            });
+            return false;
+        }
+        if (!(this.registerService.validateUpdatePassword(this.profileForm.value))) {
+            this.flashMessage.showFlashMessage({
+                messages: ['Passwords mismatch!,ReEnter with care'],
                 dismissible: true, timeout: 3000, type: 'danger'
             });
             return false;
@@ -1352,11 +1354,8 @@ let ProfileComponent = class ProfileComponent {
     }
     onSubmit() {
         const { userName } = this.profileSearchForm.value;
-        console.log(userName);
         this.githubService.getUser(userName).subscribe(users => {
-            console.log('undefined', users);
             this.githubUsers = users.items;
-            console.log('github Users', this.githubUsers);
         });
     }
 };
@@ -1534,7 +1533,6 @@ let GithubService = class GithubService {
         this.username = 'nareshAtnPLUS';
         this.client_id = 'd9308aacf8b204d361fd';
         this.client_secret = '62551cc02cee983fff0bac41baf170eb5a312c1c';
-        console.log('Github Service Init...');
     }
     getUser(userName) {
         const httpOptions = {

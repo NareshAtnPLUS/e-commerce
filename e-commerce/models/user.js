@@ -17,7 +17,8 @@ const UserSchema = mongoose.Schema({
     },
     userName:{
         type:String,
-        require:true
+        require:true,
+        unique:true
     },
     password:{
         type:String,
@@ -31,7 +32,7 @@ const UserSchema = mongoose.Schema({
 const User = module.exports = mongoose.model('User',UserSchema);
 module.exports.getUserByUsername = function(username,callback){
     const query = {userName:username};
-    console.log(query)
+    //console.log(query)
     User.findOne(query,callback);
 }
 module.exports.getUserById = function(id,callback){
@@ -42,11 +43,11 @@ module.exports.addUser = function(newUser, callback){
         // Store hash in your password DB.
         if(!err){
             newUser.password = hash
-            console.log('schem',newUser)
+            //console.log('schem',newUser)
             newUser.save(callback(null,true));
         }
         else{
-            console.log(err)
+            //console.log(err)
         }
       });
     

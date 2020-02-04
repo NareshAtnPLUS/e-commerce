@@ -171,7 +171,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"container\">\n    <h1 class=\"tab-header\">Register to the API.</h1>\n    <form [formGroup]=\"profileForm\" (ngSubmit)=\"onRegisterSubmit()\">\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-half-width\" class=\"col-xl-6\">\n                <mat-label>First Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"firstName\" name=\"firstName\" class=\"form-control\" id=\"firstName\" placeholder=\"First Name\" required>\n            </mat-form-field>\n            &nbsp;\n            <mat-form-field appearance=\"outline\"  class=\"reg-half-width\" class=\"col-xl-6\">\n                <mat-label>Last Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"lastName\" name=\"lastName\" class=\"form-control\" id=\"lastName\" placeholder=\"Last Name\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\"  class=\"reg-full-width\">\n                <mat-label>Email</mat-label>\n                <input matInput type=\"text\" formControlName=\"email\" name=\"email\" class=\"form-control\" id=\"email\" placeholder=\"Email\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>User Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"userName\" name=\"userName\" class=\"form-control\" id=\"userName\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>Password</mat-label>\n                <input matInput type=\"password\" formControlName=\"password\" name=\"password\" class=\"form-control\" id=\"password\" required>\n            </mat-form-field>\n        </div>\n        <button type=\"submit\" [disabled]=\"!profileForm.valid\" mat-raised-button color=\"primary\">Register &nbsp;&nbsp;<i class=\"material-icons\">input</i></button>\n    </form>\n</div>";
+    __webpack_exports__["default"] = "<div class=\"container\">\n    <h1 class=\"tab-header\">Register to the API.</h1>\n    <form [formGroup]=\"profileForm\" (ngSubmit)=\"onRegisterSubmit()\">\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-half-width\" class=\"col-xl-6\">\n                <mat-label>First Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"firstName\" name=\"firstName\" class=\"form-control\" id=\"firstName\" placeholder=\"First Name\" required>\n            </mat-form-field>\n            &nbsp;\n            <mat-form-field appearance=\"outline\"  class=\"reg-half-width\" class=\"col-xl-6\">\n                <mat-label>Last Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"lastName\" name=\"lastName\" class=\"form-control\" id=\"lastName\" placeholder=\"Last Name\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\"  class=\"reg-full-width\">\n                <mat-label>Email</mat-label>\n                <input matInput type=\"text\" formControlName=\"email\" name=\"email\" class=\"form-control\" id=\"email\" placeholder=\"Email\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>User Name</mat-label>\n                <input matInput type=\"text\" formControlName=\"userName\" name=\"userName\" class=\"form-control\" id=\"userName\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>Password</mat-label>\n                <input matInput type=\"password\" formControlName=\"password\" name=\"password\" class=\"form-control\" id=\"password\" required>\n            </mat-form-field>\n        </div>\n        <div class=\"row\">\n            <mat-form-field appearance=\"outline\" class=\"reg-full-width\">\n                <mat-label>Confirm Password</mat-label>\n                <input matInput type=\"password\" formControlName=\"confirmPassword\" name=\"password\" class=\"form-control\" id=\"confirmPassword\" required>\n            </mat-form-field>\n        </div>\n        <button type=\"submit\" [disabled]=\"!profileForm.valid\" mat-raised-button color=\"primary\">Register &nbsp;&nbsp;<i class=\"material-icons\">input</i></button>\n    </form>\n</div>";
     /***/
   },
 
@@ -1414,8 +1414,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           this.user = this.forgotForm.value;
           var req = this.http.post('http://localhost:3000/users/request-otp', this.user).subscribe(function (res) {
-            console.log(res.success);
-
+            // console.log(res.success);
             if (res.success) {
               _this2.authService.sendTokenUpdatePassword(res.user);
 
@@ -1426,9 +1425,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 type: 'success'
               });
 
-              _this2.router.navigate(['/account/forgot-password/otp']);
+              _this2.router.navigate(['/account/forgot-password/otp']); // console.log(res.token, res.user);
 
-              console.log(res.token, res.user);
             } else {
               _this2.flashMessage.showFlashMessage({
                 messages: ['Username does not exists!,Please register yourself as a valid User'],
@@ -1440,8 +1438,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this2.router.navigate(['/account/register']);
             }
           }, function (err) {
-            console.log('Error Occured');
-
+            // console.log('Error Occured');
             _this2.flashMessage.showFlashMessage({
               messages: ['Something Went Wrong'],
               dismissible: true,
@@ -1596,11 +1593,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this3 = this;
 
           this.otp = this.otpForm.value;
-          this.otp.userName = this.authService.getUpdateToken();
-          console.log(this.otp);
-          var req = this.http.post('http://localhost:3000/users/verify-otp', this.otp).subscribe(function (res) {
-            console.log(res);
+          this.otp.userName = this.authService.getUpdateToken(); // console.log(this.otp)
 
+          var req = this.http.post('http://localhost:3000/users/verify-otp', this.otp).subscribe(function (res) {
+            // console.log(res);
             if (res.success) {
               _this3.authService.storeUserData(res.msg, res.user);
 
@@ -1611,9 +1607,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 type: 'success'
               });
 
-              _this3.router.navigate(['/account/forgot-password/update-password']);
+              _this3.router.navigate(['/account/forgot-password/update-password']); // console.log(res.msg, res.user);
 
-              console.log(res.msg, res.user);
             } else {
               _this3.flashMessage.showFlashMessage({
                 messages: ['Username does not exists!,Please register yourself as a valid User'],
@@ -1625,8 +1620,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this3.router.navigate(['/account/register']);
             }
           }, function (err) {
-            console.log('Error Occured');
-
+            // console.log('Error Occured');
             _this3.flashMessage.showFlashMessage({
               messages: ['Something Went Wrong'],
               dismissible: true,
@@ -1797,22 +1791,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             };
             console.log(this.user);
             var req = this.http.post('http://localhost:3000/users/update-password', this.user).subscribe(function (res) {
-              console.log(res.success);
-
               if (res.success) {
                 _this4.flashMessage.showFlashMessage({
-                  messages: ['Password has been Changed'],
+                  messages: [res.msg],
                   dismissible: true,
                   timeout: 3000,
                   type: 'success'
                 });
 
                 _this4.router.navigate(['/account/login']);
-
-                console.log(res.msg, res.user);
               } else {
                 _this4.flashMessage.showFlashMessage({
-                  messages: ['Re enter the passwords again!, passwords mismatch'],
+                  messages: [res.msg],
                   dismissible: true,
                   timeout: 5000,
                   type: 'danger'
@@ -1821,8 +1811,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 _this4.router.navigate(['/account/forgot-password/update-password']);
               }
             }, function (err) {
-              console.log('Error Occured');
-
               _this4.flashMessage.showFlashMessage({
                 messages: ['Something Went Wrong'],
                 dismissible: true,
@@ -1832,8 +1820,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               _this4.router.navigate(['/account/register']);
             });
-          } else {
-            console.log('passwords mismatch');
           }
         }
       }]);
@@ -2155,7 +2141,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           lastName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(5)],
           userName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(8)],
           email: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-          password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(8)]
+          password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(8)],
+          confirmPassword: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(8)]
         });
       }
 
@@ -2169,6 +2156,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if (!this.registerService.validateEmail(this.user.email)) {
             this.flashMessage.showFlashMessage({
               messages: ['Please Use Valid Email'],
+              dismissible: true,
+              timeout: 3000,
+              type: 'danger'
+            });
+            return false;
+          }
+
+          if (!this.registerService.validateUpdatePassword(this.profileForm.value)) {
+            this.flashMessage.showFlashMessage({
+              messages: ['Passwords mismatch!,ReEnter with care'],
               dismissible: true,
               timeout: 3000,
               type: 'danger'
@@ -2565,11 +2562,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this7 = this;
 
           var userName = this.profileSearchForm.value.userName;
-          console.log(userName);
           this.githubService.getUser(userName).subscribe(function (users) {
-            console.log('undefined', users);
             _this7.githubUsers = users.items;
-            console.log('github Users', _this7.githubUsers);
           });
         }
       }]);
@@ -2877,7 +2871,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.username = 'nareshAtnPLUS';
         this.client_id = 'd9308aacf8b204d361fd';
         this.client_secret = '62551cc02cee983fff0bac41baf170eb5a312c1c';
-        console.log('Github Service Init...');
       }
 
       _createClass(GithubService, [{
