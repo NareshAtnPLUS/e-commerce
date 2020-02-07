@@ -16,6 +16,7 @@ export interface Res {
 })
 
 export class LoginComponent {
+  accountType:String="User";
   loginForm = this.fb.group({
     userName:['',Validators.required],
     password:['',Validators.minLength(8)],
@@ -32,6 +33,7 @@ export class LoginComponent {
     password:string;
   };
   onLoginSubmit(){
+    console.log(this.accountType)
     this.user = this.loginForm.value;
     const req = this.http.post<Res>('http://localhost:3000/users/authenticate', this.user).subscribe(
       res => {

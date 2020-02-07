@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Catamaran:800&display=swap');
 .sidenav-container {
   height: 100%;
 }
-
+.top-nav{
+  position: fixed;
+}
 .sidenav {
   width: 200px;
 }
@@ -17,4 +20,16 @@
   position: sticky;
   top: 0;
   z-index: 1;
+}
+.branding{
+  font-family: 'Catamaran';
+  margin-left: .5rem;
+  font-size: 1.7rem;
+  //margin-top: .rem;
+}
+#shop-mart-logo{
+  font-size: 2rem;
+  margin-bottom: .5rem;
+  color: #b40163
+
 }

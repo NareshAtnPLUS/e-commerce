@@ -1,5 +1,11 @@
 <div class="container">
     <h1 class="tab-header">Register to the API.</h1>
+    <span class="column">
+        <mat-radio-group name="accountType" [(ngModel)]="accountType">
+            <mat-radio-button value="User">User</mat-radio-button>&nbsp;&nbsp;
+            <mat-radio-button value="Admin">Admin</mat-radio-button>
+        </mat-radio-group>
+    </span><br><br>
     <form [formGroup]="profileForm" (ngSubmit)="onRegisterSubmit()">
         <div class="row">
             <mat-form-field appearance="outline" class="reg-half-width" class="col-xl-6">
@@ -36,6 +42,6 @@
                 <input matInput type="password" formControlName="confirmPassword" name="password" class="form-control" id="confirmPassword" required>
             </mat-form-field>
         </div>
-        <button type="submit" [disabled]="!profileForm.valid" mat-raised-button color="primary">Register &nbsp;&nbsp;<i class="material-icons">input</i></button>
+        <button type="submit" [disabled]="!profileForm.valid" mat-raised-button color="accent">Register &nbsp;&nbsp;<i class="material-icons">input</i></button>
     </form>
 </div>

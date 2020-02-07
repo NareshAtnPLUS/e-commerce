@@ -19,12 +19,14 @@ export class RegisterComponent  {
     password:['',Validators.minLength(8)],
     confirmPassword:['',Validators.minLength(8)],
   })
+  accountType:String = "User";
   user:{
     firstName:string;
     lastName:string;
     email:string;
     userName:string;
     password:string;
+    accountType:String;
   };
   constructor(
     private fb:FormBuilder,
@@ -37,6 +39,7 @@ export class RegisterComponent  {
   
   onRegisterSubmit(){
     this.user = this.profileForm.value;
+    this.user.accountType = this.accountType;
     if(!this.registerService.validateEmail(this.user.email)){
       this.flashMessage.showFlashMessage({
         messages:['Please Use Valid Email'],
@@ -51,7 +54,7 @@ export class RegisterComponent  {
       })
       return false      
     }
-    // console.log(this.user);
+    console.log(this.accountType);
     const req = this.http.post('http://localhost:3000/users/register', this.user).subscribe(
       res => {
         // console.log(res);
@@ -68,7 +71,7 @@ export class RegisterComponent  {
           dismissible: true, timeout: 3000, type: 'danger'
           });
         this.router.navigate(['/']);
-      });  
+      });
   }
 
 }

@@ -9,10 +9,14 @@ import { RegisterComponent } from './components/account/register/register.compon
 import { LoginComponent } from './components/account/login/login.component';
 import { OtpComponent } from './components/account/forgot-password/otp/otp.component';
 import { UpdatePasswordComponent } from './components/account/forgot-password/update-password/update-password.component';
+import { OfferComponent } from './components/offer/offer.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 const routes: Routes = [
   { path:'',component:HomeComponent },
+  { path:'admin',component:AdminComponent },
+  { path:'offer-zone',component:OfferComponent },
   { path:'account',component:AccountComponent,children:[
     { path:'forgot-password',component:ForgotPasswordComponent,children:[
       { path:'otp',component:OtpComponent },
