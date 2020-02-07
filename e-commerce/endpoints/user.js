@@ -2,6 +2,7 @@ const express = require('express');
 const user = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
+const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const config = require('../config/database')
@@ -18,7 +19,6 @@ user.post('/register',(req, res, next) => {
         userName:req.body.userName,
         password:req.body.password,
     });
-    // console.log(req.body.name)
     User.addUser(newUser, (err,user) =>{
         if (err){
             res.json({success:false,msg:'Failed to register user'});
@@ -26,14 +26,68 @@ user.post('/register',(req, res, next) => {
             res.json({success:true,msg:'Registered user Successfully'});
         }
     
-    })
+    });    
+});
+user.post('/register-admin',(req, res, next) => {
+    let newUser = new Admin({
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
+        email:req.body.email,
+        userName:req.body.userName,
+        password:req.body.password,
+    });
+    Admin.addUser(newUser, (err,user) =>{
+        if (err){
+            res.json({success:false,msg:'Failed to register user'});
+        } else {
+            res.json({success:true,msg:'Registered user Successfully'});
+        }
+    });    
+});
+user.post('/check_username',(req,res)=>{
+    var [username,accountType] = req.body.username.split('-')
+
+    if(accountType === "User"){
+        User.getUserByUsername(username, (err,user) =>{
+            if(user){
+                // console.log("msg: username already taken");                
+                return res.json({
+                    success:false,
+                    msg:"username already taken"
+                })
+            } else if(!user){
+                // console.log("msg: username available");                
+                return res.json({
+                    success:true,
+                    msg:"username available"
+                })
+            }
+        });
+    } else if(accountType === 'Admin'){
+        Admin.getUserByUsername(username, (err,user) =>{
+            if(user){
+                // console.log("msg: username already taken");                
+                return res.json({
+                    success:false,
+                    msg:"username already taken"
+                })
+            } else if(!user){
+                // console.log("msg: username available");                
+                return res.json({
+                    success:true,
+                    msg:"username available"
+                })
+            }
+        })
+    }
+    
 });
 
 user.post('/authenticate',(req, res, next) => {
     const username = req.body.userName;
     const password = req.body.password;
     // console.log(username,'password',password)
-    User.getUserByUsername(username, (err,user) =>{
+    User.getUserByUsernameAccountType(username,req.body.accountType, (err,user) =>{
         if (err) throw err;
         // console.log(user)
         if (!user) {

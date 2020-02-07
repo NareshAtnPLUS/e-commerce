@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = require('../config/database');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const UserSchema = mongoose.Schema({
+const AdminSchema = mongoose.Schema({
     firstName:{
         type:String,
         require:true
@@ -34,15 +34,15 @@ const UserSchema = mongoose.Schema({
     }
 });
 
-const User = module.exports = mongoose.model('User',UserSchema);
+const Admin = module.exports = mongoose.model('Admin',AdminSchema);
 
 module.exports.getUserByUsername = function(username,callback){
     const query = {userName:username};
     //console.log(query)
-    User.findOne(query,callback);
+    Admin.findOne(query,callback);
 }
 module.exports.getUserById = function(id,callback){
-    User.findById(id,callback);
+    Admin.findById(id,callback);
 }
 module.exports.addUser = function(newUser, callback){
     bcrypt.hash(newUser.password, saltRounds, function(err, hash) {

@@ -31,10 +31,13 @@ export class LoginComponent {
   user:{
     userName:string;
     password:string;
+    accountType:String;
   };
   onLoginSubmit(){
     console.log(this.accountType)
     this.user = this.loginForm.value;
+    this.user.accountType = this.accountType;
+    
     const req = this.http.post<Res>('http://localhost:3000/users/authenticate', this.user).subscribe(
       res => {
         // console.log(res.success,res.msg);
@@ -44,7 +47,8 @@ export class LoginComponent {
           messages: ['You Are Now Logged In'],
           dismissible: true, timeout: 3000, type: 'success'
           });
-        this.router.navigate(['/profile']);
+          if(this.accountType === 'User') this.router.navigate(['/profile']);
+          else if(this.accountType === 'Admin') this.router.navigate(['/admin']);
         //console.log(res.msg, res.user);
         } else {
           this.flashMessage.showFlashMessage({
@@ -60,7 +64,7 @@ export class LoginComponent {
           messages: ['Something Went Wrong'],
           dismissible: true, timeout: 3000, type: 'danger'
           });
-        this.router.navigate(['/account']);
+        this.router.navigate(['/account/login']);
      });
     // console.log(this.user)
 

@@ -15,7 +15,7 @@ import { AdminComponent } from './components/admin/admin.component';
 
 const routes: Routes = [
   { path:'',component:HomeComponent },
-  { path:'admin',component:AdminComponent },
+  { path:'admin',component:AdminComponent,canActivate:[AuthGuard] },
   { path:'offer-zone',component:OfferComponent },
   { path:'account',component:AccountComponent,children:[
     { path:'forgot-password',component:ForgotPasswordComponent,children:[
