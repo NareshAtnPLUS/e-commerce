@@ -87,7 +87,7 @@ user.post('/authenticate',(req, res, next) => {
     const username = req.body.userName;
     const password = req.body.password;
     // console.log(username,'password',password)
-    User.getUserByUsernameAccountType(username,req.body.accountType, (err,user) =>{
+    User.getUserByUsername(username, (err,user) =>{
         if (err) throw err;
         // console.log(user)
         if (!user) {
