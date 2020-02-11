@@ -32,8 +32,12 @@ const MobileSchema = mongoose.Schema({
                 required:true,
             },
             internalStorage: {
-            type:Number,
-            required:true
+                type:Number,
+                required:true
+            },
+            expandable:{
+                type:Number,
+                required:true
             },
             ram: {
                 type:Number,
