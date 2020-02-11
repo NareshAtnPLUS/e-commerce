@@ -28,7 +28,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { SupplierComponent } from './components/supplier/supplier.component';
 import { AddProductsComponent } from './components/supplier/add-products/add-products.component';
 import { MobileComponent } from './components/supplier/add-products/mobile/mobile.component';
-import { VariantsComponent } from './components/supplier/add-products/mobile/variants/variants.component';
+import { HttpHandlerService } from './services/http-handler.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,7 @@ import { VariantsComponent } from './components/supplier/add-products/mobile/var
     SupplierComponent,
     AddProductsComponent,
     MobileComponent,
-    VariantsComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -64,7 +65,8 @@ import { VariantsComponent } from './components/supplier/add-products/mobile/var
     RegisterService,
     AuthService,
     AuthGuard,
-    GithubService
+    GithubService,
+    HttpHandlerService
   ],
   bootstrap: [AppComponent]
 })

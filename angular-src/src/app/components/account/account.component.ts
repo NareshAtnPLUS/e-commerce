@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterService } from 'src/app/services/register.service';
-import { NgFlashMessageService } from 'ng-flash-messages';
 import { Router } from '@angular/router';
 
 @Component({

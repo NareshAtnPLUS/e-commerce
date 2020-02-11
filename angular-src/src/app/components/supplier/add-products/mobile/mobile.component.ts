@@ -5,6 +5,7 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { HttpHandlerService } from 'src/app/services/http-handler.service';
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
@@ -25,7 +26,10 @@ export class MobileComponent implements OnInit {
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
 
   mobileForm:FormGroup;
-  constructor(private fb:FormBuilder) { 
+  constructor(
+    private fb:FormBuilder,
+    private httpHandler:HttpHandlerService
+    ) { 
     this.filteredcolors = this.colorCtrl.valueChanges.pipe(
       startWith(null),
       map((color: string | null) => color ? this._filter(color) : this.allcolors.slice()));
@@ -33,11 +37,6 @@ export class MobileComponent implements OnInit {
   
   
   ngOnInit() {
-    
-    ///console.log(<FormArray>this.mobileForm.controls.variants);
-    //console.log(<FormArray>this.mobileForm.controls)
-    
-    
     this.mobileForm = this.fb.group({
       general:this.fb.group({
         brand:['',Validators.required],
@@ -76,8 +75,7 @@ export class MobileComponent implements OnInit {
       brandWarranty:this.fb.group({
         brandWarranty:[null,Validators.required],  
       })
-    }) 
-    console.log(this.mobileForm)
+    })
   }
   initVariant(){
     return this.fb.group({
@@ -96,12 +94,7 @@ export class MobileComponent implements OnInit {
     const control = <FormArray>this.mobileForm.controls.variants;
     control.removeAt(i);
   }
-  onAddMobileSubmit(){
-    console.log(this.colors)
-    console.log(this.mobileForm.value)
-    this.mobileForm.value.colors = this.colors
-    console.log(this.mobileForm.value)
-  }
+  
   add(event: MatChipInputEvent): void {
     // Add color only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
@@ -142,6 +135,8 @@ export class MobileComponent implements OnInit {
 
     return this.allcolors.filter(color => color.toLowerCase().indexOf(filterValue) === 0);
   }
-  
-
+  async onAddMobileSubmit(){
+    this.mobileForm.value.colors = this.colors
+    await this.httpHandler.addMobileHandler(this.mobileForm.value);
+  }
 }

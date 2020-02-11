@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgFlashMessageService } from 'ng-flash-messages';
 import { Router } from '@angular/router';
-interface Res{
+import { HttpHandlerService } from 'src/app/services/http-handler.service';
+export interface Res{
   success:boolean,
   msg:string,
 }
@@ -21,11 +22,7 @@ export class UpdatePasswordComponent implements OnInit {
   })
   constructor(
     private fb:FormBuilder,
-    private registerService:RegisterService,
-    private http:HttpClient,
-    private authService:AuthService,
-    private flashMessage:NgFlashMessageService,
-    private router:Router
+    private httpHandler:HttpHandlerService,
   ) { }
 
   ngOnInit() {
@@ -34,42 +31,8 @@ export class UpdatePasswordComponent implements OnInit {
     userName:String;
     password:Object;
   }
-  onUpdateSubmit(){
-    if(this.registerService.validateUpdatePassword(this.updatePasswordForm.value)){
-      // console.log(this.updatePasswordForm.value);
-      
-      //this.user.password = this.updatePasswordForm.value;
-      this.user = {
-        userName: this.authService.getUpdateToken(),
-        password:this.updatePasswordForm.value,
-      }
-      // console.log(this.user)
-      const req = this.http.post<Res>('http://localhost:3000/users/update-password', this.user).subscribe(
-      res => {
-        if (res.success) {
-          this.flashMessage.showFlashMessage({
-          messages: [res.msg],
-          dismissible: true, timeout: 3000, type: 'success'
-          });
-        this.router.navigate(['/account/login']);
-        } else {
-          this.flashMessage.showFlashMessage({
-            messages: [res.msg],
-          dismissible: true, timeout: 5000, type: 'danger'
-          });
-          this.router.navigate(['/account/forgot-password/update-password']);
-        }
-      },
-      err => {
-
-        this.flashMessage.showFlashMessage({
-          messages: ['Something Went Wrong'],
-          dismissible: true, timeout: 3000, type: 'danger'
-          });
-        this.router.navigate(['/account/register']);
-     });
-      
-    }
+  async onUpdateSubmit(){
+    await this.httpHandler.updatePasswordHandler(this.updatePasswordForm);
   }
 
 }

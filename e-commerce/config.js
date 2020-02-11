@@ -43,7 +43,7 @@ restApi.use(passport.initialize());
 restApi.use(passport.session());
 require('./config/passport')(passport);
 
-restApi.use('/users',users);
+restApi.use('/user',users);
 restApi.use('/admin',admins);
 restApi.use('/supplier',suppliers);
 
