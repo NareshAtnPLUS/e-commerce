@@ -19,7 +19,35 @@
                             <mat-label>Model Number</mat-label>
                             <input matInput type="text" formControlName="modelNumber" name="modelNumber" class="form-control" id="modelNumber" placeholder="SM A505FD" required>
                         </mat-form-field>
-                    </div>                    
+                    </div>
+                </div>
+                <div class="row">
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList aria-label="color selection">
+                          <mat-chip
+                            *ngFor="let color of colors"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="remove(color)">
+                            {{color}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                          </mat-chip>
+                          <input
+                            placeholder="New color..."
+                            #colorInput
+                            [formControl]="colorCtrl"
+                            [matAutocomplete]="auto"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="addOnBlur"
+                            (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                          <mat-option *ngFor="let color of filteredcolors | async" [value]="color">
+                            {{color}}
+                          </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
                 </div>
                 <div formArrayName="variants">
                     <div *ngFor="let variant of mobileForm.controls.variants.controls; let i = index">
@@ -41,10 +69,6 @@
                             <mat-form-field appearance="legacy"  class="mob-min-width">
                                 <mat-label>RAM</mat-label>
                                 <input matInput type="number" formControlName="ram" name="ram" class="form-control" id="ram" placeholder="6" required>
-                            </mat-form-field>
-                            <mat-form-field appearance="legacy"  class="mob-min-width">
-                                <mat-label>Color</mat-label>
-                                <input matInput type="text" formControlName="color" name="color" class="form-control" id="color" placeholder="jet black" required>
                             </mat-form-field>
                             <mat-form-field appearance="legacy"  class="mob-min-width">
                                 <mat-label>Expandable Memory</mat-label>
@@ -134,8 +158,9 @@
                         <input matInput type="text" formControlName="brandWarranty" name="brandWarranty" class="form-control" id="brandWarranty" placeholder="1" required>
                     </mat-form-field>
                 </div>
-                <button type="submit" [disabled]="!mobileForm.valid" mat-raised-button color="accent">Add Mobile &nbsp;&nbsp;<i class="material-icons">input</i></button>
+                <button type="submit" [disabled]="!mobileForm.valid"  mat-raised-button color="accent">Add Mobile &nbsp;&nbsp;<i class="material-icons">input</i></button>
             </form>
         </mat-card-content>
     </mat-card>
 </div>
+<!---->

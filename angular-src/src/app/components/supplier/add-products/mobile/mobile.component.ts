@@ -1,23 +1,42 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Validators, FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ArrayType } from '@angular/compiler';
-
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
   styleUrls: ['./mobile.component.scss']
 })
 export class MobileComponent implements OnInit {
-  
-  
-  mobileForm:FormGroup;
-  constructor(private fb:FormBuilder) { }
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  colorCtrl = new FormControl();
+  filteredcolors: Observable<string[]>;
+  colors: string[] = ['Black'];
+  allcolors: string[] = ['White', 'Red', 'Aqua'];
 
+  @ViewChild('colorInput', {static: false}) colorInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+
+  mobileForm:FormGroup;
+  constructor(private fb:FormBuilder) { 
+    this.filteredcolors = this.colorCtrl.valueChanges.pipe(
+      startWith(null),
+      map((color: string | null) => color ? this._filter(color) : this.allcolors.slice()));
+  }
+  
+  
   ngOnInit() {
     
     ///console.log(<FormArray>this.mobileForm.controls.variants);
     //console.log(<FormArray>this.mobileForm.controls)
-    console.log(this.initVariant());
+    
     
     this.mobileForm = this.fb.group({
       general:this.fb.group({
@@ -25,6 +44,7 @@ export class MobileComponent implements OnInit {
         modelName:['',Validators.required],
         modelNumber:['',Validators.required],
       }),
+      
       variants:this.fb.array([
         this.initVariant()
       ]),
@@ -61,7 +81,6 @@ export class MobileComponent implements OnInit {
   }
   initVariant(){
     return this.fb.group({
-      color:[0,Validators.required],
       price:[0,Validators.required],
       internalStorage:[0,Validators.required],
       expandableMemory:[0,Validators.required],
@@ -78,7 +97,50 @@ export class MobileComponent implements OnInit {
     control.removeAt(i);
   }
   onAddMobileSubmit(){
+    console.log(this.colors)
     console.log(this.mobileForm.value)
+    this.mobileForm.value.colors = this.colors
+    console.log(this.mobileForm.value)
+  }
+  add(event: MatChipInputEvent): void {
+    // Add color only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+
+      // Add our color
+      if ((value || '').trim()) {
+        this.colors.push(value.trim());
+      }
+
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+
+      this.colorCtrl.setValue(null);
+    }
+  }
+
+  remove(color: string): void {
+    const index = this.colors.indexOf(color);
+
+    if (index >= 0) {
+      this.colors.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.colors.push(event.option.viewValue);
+    this.colorInput.nativeElement.value = '';
+    this.colorCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allcolors.filter(color => color.toLowerCase().indexOf(filterValue) === 0);
   }
   
 

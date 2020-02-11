@@ -12,7 +12,7 @@ import * as Material from '@angular/material';
         Material.MatCardModule, Material.MatChipsModule,  Material.MatInputModule,
        Material.MatSelectModule, Material.MatRadioModule, Material.MatFormFieldModule,
        Material.MatTabsModule,Material.MatButtonToggleModule,Material.MatProgressSpinnerModule,
-       Material.MatRadioModule,Material.MatOptionModule
+       Material.MatRadioModule,Material.MatOptionModule,Material.MatAutocompleteModule
   ],
   exports: [ Material.MatButtonModule, Material.MatCheckboxModule, Material.MatMenuModule,
     Material.MatExpansionModule, Material.MatToolbarModule, Material.MatSidenavModule,
@@ -20,7 +20,7 @@ import * as Material from '@angular/material';
     Material.MatCardModule, Material.MatChipsModule, Material.MatInputModule,
    Material.MatSelectModule, Material.MatRadioModule,Material.MatFormFieldModule,
    Material.MatTabsModule,Material.MatButtonToggleModule,Material.MatProgressSpinnerModule,
-   Material.MatRadioModule,Material.MatOptionModule
+   Material.MatRadioModule,Material.MatOptionModule,Material.MatAutocompleteModule
   ]
 })
 export class MaterialModule { }
