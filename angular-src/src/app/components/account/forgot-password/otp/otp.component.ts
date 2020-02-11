@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgFlashMessageService } from 'ng-flash-messages';
 import { Router } from '@angular/router';
+import { HttpHandlerService } from 'src/app/services/http-handler.service';
 export interface Res{
   success:boolean,
   user:string,
@@ -25,45 +26,14 @@ export class OtpComponent implements OnInit {
   }
   constructor(
     private fb:FormBuilder,
-    private http:HttpClient,
-    private authService:AuthService,
-    private flashMessage:NgFlashMessageService,
-    private router:Router,
+    private httpHandler:HttpHandlerService,
     ) { }
 
   ngOnInit() {
   }
-  onOtpSubmit(){
-    this.otp = this.otpForm.value
-    this.otp.userName = this.authService.getUpdateToken()
+  async onOtpSubmit(){
     // console.log(this.otp)
-    const req = this.http.post<Res>('http://localhost:3000/users/verify-otp', this.otp).subscribe(
-      res => {
-        // console.log(res);
-        if (res.success) {
-          this.authService.storeUserData(res.msg, res.user);
-          this.flashMessage.showFlashMessage({
-          messages: ['OTP verification sucessfull!'],
-          dismissible: true, timeout: 3000, type: 'success'
-          });
-        this.router.navigate(['/account/forgot-password/update-password']);
-        // console.log(res.msg, res.user);
-        } else {
-          this.flashMessage.showFlashMessage({
-            messages: ['Username does not exists!,Please register yourself as a valid User'],
-          dismissible: true, timeout: 5000, type: 'danger'
-          });
-          this.router.navigate(['/account/register']);
-        }
-      },
-      err => {
-        // console.log('Error Occured');
-        this.flashMessage.showFlashMessage({
-          messages: ['Something Went Wrong'],
-          dismissible: true, timeout: 3000, type: 'danger'
-          });
-        this.router.navigate(['/account/register']);
-     });
+    await this.httpHandler.otpHttpHandler(this.otpForm.value);
   }
 
 }

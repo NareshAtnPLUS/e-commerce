@@ -12,18 +12,19 @@ const MobileSchema = mongoose.Schema({
         modelNumber:{
             type:String,
             required:true,
-            unique:true
-        },
-        color: {
-            type:Array
-        },
-        variant: [
+            //unique:true
+        },        
+    },
+    colors: {
+        type:Array
+    },
+    variants: [
         {
-            color:{
-                type:String,
+            price:{
+                type:Number,
                 required:true
             },
-            price:{
+            expandableMemory: {
                 type:Number,
                 required:true
             },
@@ -35,17 +36,12 @@ const MobileSchema = mongoose.Schema({
                 type:Number,
                 required:true
             },
-            expandable:{
-                type:Number,
-                required:true
-            },
             ram: {
                 type:Number,
                 required:true
             }
         }
-      ],
-    },
+    ],
     displayFeatures: {
         size:{
             type:Number,
@@ -58,10 +54,14 @@ const MobileSchema = mongoose.Schema({
     },
     osAndProcessor: {
         os: {
+            type:String,
+            required:true
+        },
+        version: {
             type:Number,
             required:true
         },
-        psrType: {
+        psrName: {
             type:String,
             required:true
         },
@@ -75,10 +75,6 @@ const MobileSchema = mongoose.Schema({
         }
         
     },
-    expandableMemory: {
-        type:Number,
-        required:true
-    },
     camera: {
         primaryCamera: {
             type:String,
@@ -88,16 +84,16 @@ const MobileSchema = mongoose.Schema({
         }
     },
     networkFeatures: {
-        type: {
+        networkGen: {
             type:String,
             required:true
         },
-        internetConnectivity: {
+        connectivity: {
             type:String,
             required:true
         },
     },
-    dimensions: {
+    dimension: {
         width: {
             type:Number,
             required:true
@@ -106,7 +102,7 @@ const MobileSchema = mongoose.Schema({
             type:Number,
             required:true
         },
-        depth: {
+        thickness: {
             type:Number,
             required:true
         },
@@ -116,8 +112,10 @@ const MobileSchema = mongoose.Schema({
         },
     },
     brandWarranty:{
-        type:Number,
-        required:true
+        brandWarranty:{
+            type:String,
+            required:true
+        },
     },
     seller:[
         {
@@ -132,3 +130,4 @@ const MobileSchema = mongoose.Schema({
         }
     ]
 });
+const Mobile = module.exports = mongoose.model('Mobile',MobileSchema);

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { fromEvent } from 'rxjs';
 import { map,debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import  axios  from 'axios';
+import { HttpHandlerService } from 'src/app/services/http-handler.service';
 let username;
 export interface State{
   value:string;
@@ -59,10 +60,8 @@ export class RegisterComponent implements AfterViewInit {
   textFeildObservable$:any;
   constructor(
     private fb:FormBuilder,
-    private registerService:RegisterService,
     private flashMessage:NgFlashMessageService,
-    private router: Router,
-    private http: HttpClient
+    private httpHandler:HttpHandlerService
     ) { 
       this.observer = {
         next:async function(data:string){
@@ -97,7 +96,7 @@ export class RegisterComponent implements AfterViewInit {
       .subscribe(this.observer)
     }
   
-  onRegisterSubmit(){
+  async onRegisterSubmit(){
     this.user = this.profileForm.value;
     this.user.accountType = this.accountType;
     if(!username){
@@ -107,42 +106,8 @@ export class RegisterComponent implements AfterViewInit {
       })
       return false;
     }
-    if(!this.registerService.validateEmail(this.user.email)){
-      this.flashMessage.showFlashMessage({
-        messages:['Please Use Valid Email'],
-        dismissible: true, timeout: 5000, type: 'danger'
-      })
-      return false
-    }
-    if(!(this.registerService.validateUpdatePassword(this.profileForm.value))){
-      this.flashMessage.showFlashMessage({
-        messages:['Passwords mismatch!,ReEnter with care'],
-        dismissible: true, timeout: 3000, type: 'danger'
-      })
-      return false      
-    }
-    console.log(this.accountType);
-    let url;
-    if(this.accountType === "Admin"){ url = 'http://localhost:3000/admin/register' }
-    if(this.accountType === "Supplier"){ url = 'http://localhost:3000/supplier/register' }
-    else if(this.accountType === 'User'){ url = 'http://localhost:3000/users/register' }
-    const req = this.http.post( url, this.user).subscribe(
-      res => {
-        // console.log(res);
-        this.flashMessage.showFlashMessage({
-          messages: ['You Are Now Registered and can Login'],
-          dismissible: true, timeout: 3000, type: 'success'
-          });
-        this.router.navigate(['/account/login']);
-      },
-      err => {
-        console.log('Error Occured');
-        this.flashMessage.showFlashMessage({
-          messages: ['Something Went Wrong'],
-          dismissible: true, timeout: 3000, type: 'danger'
-          });
-        this.router.navigate(['/']);
-      });
+    await this.httpHandler.registerHttpHandler(this.user,this.accountType,this.profileForm);
+    
   }
 
 }

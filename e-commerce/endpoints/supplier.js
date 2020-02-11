@@ -1,6 +1,7 @@
 const express = require('express');
 const supplier = express.Router();
 const Supplier = require('../models/supplier');
+const Mobile = require('../models/mobile')
 const jwt = require('jsonwebtoken');
 
 const config = require('../config/database')
@@ -21,6 +22,38 @@ supplier.post('/register',(req, res, next) => {
         }
     });    
 });
+supplier.post('/add-product',(req,res,next) => {
+    console.log('req.body',req.body)
+    let newProduct = new Mobile(req.body)
+    productPromise = new Promise((resolve,reject) => {
+        newProduct.save((err)=>{
+            if(err){
+                throw err;
+            } else {
+                resolve('Saved in MongoDB');
+            }
+        })
+        
+    });
+    productPromise
+        .then((successMsg)=>{
+            console.log(successMsg)
+        })
+        .catch((err)=>{
+            res.json({
+                success:false,
+                msg:'Invalid Entry to the database'
+            })
+        })
+        .finally(()=>{
+            res.json({
+                success:true,
+                msg:'Added Mobile to the products'
+            })
+        })
+
+    
+})
 supplier.post('/authenticate',(req, res, next) => {
     const username = req.body.userName;
     const password = req.body.password;

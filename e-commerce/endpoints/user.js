@@ -144,8 +144,12 @@ user.post('/verify-otp',(req,res,next) => {
 user.post('/update-password',(req,res) => {
     const password = req.body.password.password;
     const confirmPassword = req.body.password.confirmPassword;
-    const userName = req.body.userName
-    let gUser={};
+    if(!userName || password){
+        res.json({
+            success:false,
+            msg:"invalid Request to server"
+        })
+    }
     User.updatePassword(password,(hashedPassword)=>{
         if(hashedPassword){
             User.findOneAndUpdate({userName},{password:hashedPassword},(err,data)=>{
