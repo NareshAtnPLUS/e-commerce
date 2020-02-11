@@ -25,6 +25,10 @@ import { OtpComponent } from './components/account/forgot-password/otp/otp.compo
 import { UpdatePasswordComponent } from './components/account/forgot-password/update-password/update-password.component';
 import { OfferComponent } from './components/offer/offer.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { SupplierComponent } from './components/supplier/supplier.component';
+import { AddProductsComponent } from './components/supplier/add-products/add-products.component';
+import { MobileComponent } from './components/supplier/add-products/mobile/mobile.component';
+import { VariantsComponent } from './components/supplier/add-products/mobile/variants/variants.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +42,11 @@ import { AdminComponent } from './components/admin/admin.component';
     OtpComponent,
     UpdatePasswordComponent,
     OfferComponent,
-    AdminComponent
+    AdminComponent,
+    SupplierComponent,
+    AddProductsComponent,
+    MobileComponent,
+    VariantsComponent
   ],
   imports: [
     BrowserModule,

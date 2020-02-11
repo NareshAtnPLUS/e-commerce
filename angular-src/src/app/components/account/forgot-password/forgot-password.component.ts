@@ -15,6 +15,7 @@ export interface Res{
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent {
+  accountType:String="User";
   forgotForm = this.fb.group({
     userName:['',Validators.minLength(4)],
   })

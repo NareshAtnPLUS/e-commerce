@@ -11,12 +11,22 @@ import { OtpComponent } from './components/account/forgot-password/otp/otp.compo
 import { UpdatePasswordComponent } from './components/account/forgot-password/update-password/update-password.component';
 import { OfferComponent } from './components/offer/offer.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { SupplierComponent } from './components/supplier/supplier.component';
+import { AddProductsComponent } from './components/supplier/add-products/add-products.component';
+import { MobileComponent } from './components/supplier/add-products/mobile/mobile.component';
 
 
 const routes: Routes = [
   { path:'',component:HomeComponent },
   { path:'admin',component:AdminComponent,canActivate:[AuthGuard] },
   { path:'offer-zone',component:OfferComponent },
+  { path:'supplier',component:SupplierComponent,canActivate:[AuthGuard],children:[
+    { path:'add-products',component:AddProductsComponent,canActivate:[AuthGuard],children:[
+      {path:'add-mobile',component:MobileComponent,canActivate:[AuthGuard]}
+    ]
+    }
+    ]
+  },
   { path:'account',component:AccountComponent,children:[
     { path:'forgot-password',component:ForgotPasswordComponent,children:[
       { path:'otp',component:OtpComponent },
