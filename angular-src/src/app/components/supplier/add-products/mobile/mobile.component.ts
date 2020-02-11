@@ -9,18 +9,25 @@ import { ArrayType } from '@angular/compiler';
 })
 export class MobileComponent implements OnInit {
   
-  @Input() variantsArray:ArrayType[];
+  
   mobileForm:FormGroup;
   constructor(private fb:FormBuilder) { }
 
   ngOnInit() {
-    let newMobileForm = this.fb.group({
+    
+    ///console.log(<FormArray>this.mobileForm.controls.variants);
+    //console.log(<FormArray>this.mobileForm.controls)
+    console.log(this.initVariant());
+    
+    this.mobileForm = this.fb.group({
       general:this.fb.group({
         brand:['',Validators.required],
         modelName:['',Validators.required],
         modelNumber:['',Validators.required],
-        variants:this.fb.array([])
       }),
+      variants:this.fb.array([
+        this.initVariant()
+      ]),
       displayFeatures:this.fb.group({
         size:[null,Validators.required],
         resolution:['',Validators.required],
@@ -49,41 +56,30 @@ export class MobileComponent implements OnInit {
       brandWarranty:this.fb.group({
         brandWarranty:[null,Validators.required],  
       })
+    }) 
+    console.log(this.mobileForm)
+  }
+  initVariant(){
+    return this.fb.group({
+      color:[0,Validators.required],
+      price:[0,Validators.required],
+      internalStorage:[0,Validators.required],
+      expandableMemory:[0,Validators.required],
+      ram:[0,Validators.required],
+      available:[0,Validators.required],
     })
-    const variantsArrayControl = <FormArray>newMobileForm.controls['variants'];
-    this.variantsArray.forEach(item => {
-      let newVariant = this.fb.group({
-        price: [null,Validators.required],
-        available: [null,Validators.required],
-        internalStorage: [null,Validators.required],
-        color:['',Validators.required],
-        ram:[null,Validators.required],
-        expandableMemory:[null,Validators.required],
-      });
-      variantsArrayControl.push(newVariant)
-    })
-    this.mobileForm = newMobileForm;
   }
-  addVariant():void{
-    const variantsArrayControl = <FormArray>this.mobileForm.controls['variants'];
-    
-      let newVariant = this.fb.group({
-        price: [null,Validators.required],
-        available: [null,Validators.required],
-        internalStorage: [null,Validators.required],
-        color:['',Validators.required],
-        ram:[null,Validators.required],
-        expandableMemory:[null,Validators.required],
-      });
-      variantsArrayControl.push(newVariant)
+  addVariant() {
+    const control = <FormArray>this.mobileForm.controls.variants;
+    control.push(this.initVariant());
   }
-  deleteVariant(index) {
-    const variantsArrayControl = <FormArray>this.mobileForm.controls['variants'];
-    variantsArrayControl.removeAt(index);
+  removeVariant(i: number) {
+    const control = <FormArray>this.mobileForm.controls.variants;
+    control.removeAt(i);
   }
-  onAddMobileSubmit():void{
-    console.log(this.mobileForm.value);
-    
+  onAddMobileSubmit(){
+    console.log(this.mobileForm.value)
   }
+  
 
 }

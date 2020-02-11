@@ -19,15 +19,41 @@
                             <mat-label>Model Number</mat-label>
                             <input matInput type="text" formControlName="modelNumber" name="modelNumber" class="form-control" id="modelNumber" placeholder="SM A505FD" required>
                         </mat-form-field>
-                    </div>
-                    <div class="row" formArrayName="variants">
-                        <div *ngFor="let control of mobileForm.controls['formArray'].controls; let i = index">
-                            <button mat-button type="button" (click)="deleteVariant(i)">Delete Variant</button>
-                            <app-variants [myForm]="mobileForm.controls.formArray.controls[i]"></app-variants>
+                    </div>                    
+                </div>
+                <div formArrayName="variants">
+                    <div *ngFor="let variant of mobileForm.controls.variants.controls; let i = index">
+                        <span><h5>Variant {{i + 1}}</h5></span>
+                        <span *ngIf="mobileForm.controls.variants.controls.length > 1" (click)="removeVariant(i)"></span>
+                        <div [formGroupName]="i">                            
+                            <mat-form-field appearance="legacy"  class="mob-min-width">
+                                <mat-label>Price</mat-label>
+                                <input matInput type="text" formControlName="price" name="price" class="form-control" id="price" placeholder="₹21,500" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="legacy"  class="mob-min-width">
+                                <mat-label>Available</mat-label>
+                                <input matInput type="number" formControlName="available" name="available" class="form-control" id="available" placeholder="10" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="legacy"  class="mob-min-width">
+                                <mat-label>Internal Storage</mat-label>
+                                <input matInput type="number" formControlName="internalStorage" name="internalStorage" class="form-control" id="internalStorage" placeholder="64" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="legacy"  class="mob-min-width">
+                                <mat-label>RAM</mat-label>
+                                <input matInput type="number" formControlName="ram" name="ram" class="form-control" id="ram" placeholder="6" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="legacy"  class="mob-min-width">
+                                <mat-label>Color</mat-label>
+                                <input matInput type="text" formControlName="color" name="color" class="form-control" id="color" placeholder="jet black" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="legacy"  class="mob-min-width">
+                                <mat-label>Expandable Memory</mat-label>
+                                <input matInput type="number" formControlName="expandableMemory" name="expandable" class="form-control" id="expandable" placeholder="256" required>
+                            </mat-form-field>
                         </div>
-                        <button mat-button type="button" (click)="addVariant()">Add Variant</button>
                     </div>
                 </div>
+                <button mat-button (click)="addVariant()">Add Variant</button>
                 <div formGroupName="displayFeatures" id="displayFeatures" class="row">
                     <mat-form-field appearance="legacy" class="mob-min-width">
                         <mat-label>Display </mat-label>
@@ -108,7 +134,7 @@
                         <input matInput type="text" formControlName="brandWarranty" name="brandWarranty" class="form-control" id="brandWarranty" placeholder="1" required>
                     </mat-form-field>
                 </div>
-                <button type="submit" [disabled]="!mobileFormvalid" mat-raised-button color="accent">Add Mobile &nbsp;&nbsp;<i class="material-icons">input</i></button>
+                <button type="submit" [disabled]="!mobileForm.valid" mat-raised-button color="accent">Add Mobile &nbsp;&nbsp;<i class="material-icons">input</i></button>
             </form>
         </mat-card-content>
     </mat-card>
