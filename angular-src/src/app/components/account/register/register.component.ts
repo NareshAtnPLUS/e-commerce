@@ -8,6 +8,14 @@ import { fromEvent } from 'rxjs';
 import { map,debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import  axios  from 'axios';
 let username;
+export interface State{
+  value:string;
+  viewValue:string;
+}
+export interface Country{
+  value:string;
+  viewValue:string;
+}
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -22,6 +30,12 @@ export class RegisterComponent implements AfterViewInit {
     email:['',Validators.required],
     password:['',Validators.minLength(8)],
     confirmPassword:['',Validators.minLength(8)],
+    address:this.fb.group({
+      doorNo:['',Validators.required],
+      street:['',Validators.required],
+      district:['',Validators.required],
+      state:['',Validators.required]
+    })
   })
   accountType:String = "User";
   user:{
@@ -32,6 +46,16 @@ export class RegisterComponent implements AfterViewInit {
     password:string;
     accountType:String;
   };
+  state:State[]=[
+    {value:'chennai',viewValue:'Chennai'},
+    {value:'kanchipuram',viewValue:'Kanchipuram'},
+    {value:'coimbatore',viewValue:'Coimbatore'},
+  ];
+  country:Country[]=[
+    {value:'tamilnadu',viewValue:'TamilNadu'},
+    {value:'kerala',viewValue:'Kerala'},
+    {value:'karnataka',viewValue:'Karnataka'},
+  ];
   textFeildObservable$:any;
   constructor(
     private fb:FormBuilder,
@@ -63,17 +87,13 @@ export class RegisterComponent implements AfterViewInit {
       }
     }
     observer:any
-    event:{
-      target:{
-        value:any
-      }
-    }
+    
    
 
     ngAfterViewInit() {
       const textFeild = document.getElementById('userName')
       this.textFeildObservable$ = fromEvent(textFeild, 'input');
-      this.textFeildObservable$.pipe(map(event => event.target.value+`-${this.accountType}`),debounceTime(1000),distinctUntilChanged())
+      this.textFeildObservable$.pipe(map((event:any) => event.target.value+`-${this.accountType}`),debounceTime(1000),distinctUntilChanged())
       .subscribe(this.observer)
     }
   
@@ -103,7 +123,8 @@ export class RegisterComponent implements AfterViewInit {
     }
     console.log(this.accountType);
     let url;
-    if(this.accountType === "Admin"){ url = 'http://localhost:3000/users/register-admin' }
+    if(this.accountType === "Admin"){ url = 'http://localhost:3000/admin/register' }
+    if(this.accountType === "Supplier"){ url = 'http://localhost:3000/supplier/register' }
     else if(this.accountType === 'User'){ url = 'http://localhost:3000/users/register' }
     const req = this.http.post( url, this.user).subscribe(
       res => {

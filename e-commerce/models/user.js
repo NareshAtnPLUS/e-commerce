@@ -31,7 +31,26 @@ const UserSchema = mongoose.Schema({
     },
     otp:{
         type:String,
+    },
+    address:{
+        doorNo:{
+            type:String,
+            require:true
+        },
+        street:{
+            type:String,
+            require:true
+        },
+        district:{
+            type:String,
+            require:true
+        },
+        state:{
+            type:String,
+            require:true
+        }
     }
+
 });
 
 const User = module.exports = mongoose.model('User',UserSchema);

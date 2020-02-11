@@ -2,7 +2,8 @@ const express = require('express');
 const user = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
-const Admin = require('../models/Admin');
+const Admin = require('../models/admin');
+const Supplier = require('../models/supplier');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const config = require('../config/database')
@@ -18,6 +19,12 @@ user.post('/register',(req, res, next) => {
         email:req.body.email,
         userName:req.body.userName,
         password:req.body.password,
+        address:{
+            doorNo:req.body.doorNo,
+            street:req.body.street,
+            state:req.body.state,
+            district:req.body.district
+        }
     });
     User.addUser(newUser, (err,user) =>{
         if (err){
@@ -28,22 +35,7 @@ user.post('/register',(req, res, next) => {
     
     });    
 });
-user.post('/register-admin',(req, res, next) => {
-    let newUser = new Admin({
-        firstName:req.body.firstName,
-        lastName:req.body.lastName,
-        email:req.body.email,
-        userName:req.body.userName,
-        password:req.body.password,
-    });
-    Admin.addUser(newUser, (err,user) =>{
-        if (err){
-            res.json({success:false,msg:'Failed to register user'});
-        } else {
-            res.json({success:true,msg:'Registered user Successfully'});
-        }
-    });    
-});
+
 user.post('/check_username',(req,res)=>{
     var [username,accountType] = req.body.username.split('-')
 
@@ -63,6 +55,22 @@ user.post('/check_username',(req,res)=>{
                 })
             }
         });
+    } else if(accountType === 'Supplier'){
+        Supplier.getUserByUsername(username, (err,user) =>{
+            if(user){
+                // console.log("msg: username already taken");                
+                return res.json({
+                    success:false,
+                    msg:"username already taken"
+                })
+            } else if(!user){
+                // console.log("msg: username available");                
+                return res.json({
+                    success:true,
+                    msg:"username available"
+                })
+            }
+        })
     } else if(accountType === 'Admin'){
         Admin.getUserByUsername(username, (err,user) =>{
             if(user){
@@ -117,6 +125,7 @@ user.post('/authenticate',(req, res, next) => {
     // console.log(req.user);
 
 });
+
 user.post('/verify-otp',(req,res,next) => {
     const userName = req.body.userName
     const otp = req.body.otp;

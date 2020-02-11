@@ -3,6 +3,7 @@
     <span class="column">
         <mat-radio-group name="accountType" [(ngModel)]="accountType">
             <mat-radio-button value="User">User</mat-radio-button>&nbsp;&nbsp;
+            <mat-radio-button value="Supplier">Supplier</mat-radio-button>&nbsp;&nbsp;
             <mat-radio-button value="Admin">Admin</mat-radio-button>
         </mat-radio-group>
     </span><br><br>
@@ -20,7 +21,7 @@
             </mat-form-field>
         </div>
         
-        <button [disabled]="!loginForm.valid" mat-raised-button color="primary">Login &nbsp;&nbsp;<i class="material-icons">lock_open</i></button>
+        <button [disabled]="!loginForm.valid" mat-raised-button color="accent">Login &nbsp;&nbsp;<i class="material-icons">lock_open</i></button>
         
         
     </form>

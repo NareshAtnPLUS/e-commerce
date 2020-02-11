@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -6,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-
-  constructor() { }
-
+  
+  constructor(private fb: FormBuilder) { }
+  
   ngOnInit() {
   }
 

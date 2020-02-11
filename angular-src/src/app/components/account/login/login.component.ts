@@ -37,8 +37,11 @@ export class LoginComponent {
     console.log(this.accountType)
     this.user = this.loginForm.value;
     this.user.accountType = this.accountType;
-    
-    const req = this.http.post<Res>('http://localhost:3000/users/authenticate', this.user).subscribe(
+    var url;
+    if(this.accountType === 'Admin') url = 'http://localhost:3000/admin/authenticate';
+    if(this.accountType === 'Supplier') url = 'http://localhost:3000/supplier/authenticate';
+    else if (this.accountType === 'User') url = 'http://localhost:3000/users/authenticate';
+    const req = this.http.post<Res>(url, this.user).subscribe(
       res => {
         // console.log(res.success,res.msg);
         if (res.success) {
@@ -49,6 +52,7 @@ export class LoginComponent {
           });
           if(this.accountType === 'User') this.router.navigate(['/profile']);
           else if(this.accountType === 'Admin') this.router.navigate(['/admin']);
+          else if(this.accountType === 'Supplier') this.router.navigate(['/supplier']);
         //console.log(res.msg, res.user);
         } else {
           this.flashMessage.showFlashMessage({
