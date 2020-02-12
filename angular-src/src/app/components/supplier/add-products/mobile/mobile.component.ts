@@ -21,15 +21,15 @@ export class MobileComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  productImage = new FormControl();
+  
   colorCtrl = new FormControl();
   filteredcolors: Observable<string[]>;
   colors: string[] = ['Black'];
   allcolors: string[] = ['White', 'Red', 'Aqua'];
-
+  
   @ViewChild('colorInput', {static: false}) colorInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
-  selectedFile = null;
+  
   mobileForm:FormGroup;
   constructor(
     private fb:FormBuilder,
@@ -134,19 +134,18 @@ export class MobileComponent implements OnInit {
     this.colorInput.nativeElement.value = '';
     this.colorCtrl.setValue(null);
   }
-  onFileSelected(e){
-    this.selectedFile = e.target.files[0];
-    console.log(this.selectedFile)
-  }
-
+  
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.allcolors.filter(color => color.toLowerCase().indexOf(filterValue) === 0);
   }
+  
   async onAddMobileSubmit(){
     this.mobileForm.value.colors = this.colors
-    this.mobileForm.value.productImage = this.selectedFile;
+    
     await this.httpHandler.addMobileHandler(this.mobileForm.value);
+    // await this.httpHandler.
+    
   }
 }

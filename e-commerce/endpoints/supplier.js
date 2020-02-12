@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         cb(null,file.filename);
     }
 })
-const upload = multer({storage});
+const upload = multer({storage:storage});
 const config = require('../config/database')
 
 supplier.post('/register',(req, res, next) => {
@@ -33,11 +33,34 @@ supplier.post('/register',(req, res, next) => {
         }
     });    
 });
-supplier.post('/add-product',upload.single('productImage'),(req,res,next) => {
-    console.log(req.body);
+supplier.post('/add-product-image',upload.single('file'),(req,res,next) => {
+    let file = req.file
+    console.log(file.filename);
+    if(!file){
+        const error = new Error('No File Found');
+        error.httpStatusCode = 404
+        return next(error);
+    }else{
+        console.log(file)
+    }
     let newProduct = new Mobile(req.body)
     
     
+})
+supplier.post('/add-product',(req,res,next) => {
+    console.log(req.body);
+    let newProduct = new Mobile(req.body)
+    newProduct
+        .save()
+        .then(()=>{
+            res.json({
+                success:true,
+                msg:"Product Added Successfully"
+            })
+        })
+        .catch(err =>{
+            console.log(err);
+        })
 })
 supplier.post('/authenticate',(req, res, next) => {
     const username = req.body.userName;

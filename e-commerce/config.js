@@ -24,7 +24,7 @@ const suppliers = require('./endpoints/supplier');
 
 const restApi = express();
 
-restApi.use(cors());
+restApi.use(cors({origin:"*"}));
 
 // View Engine
 restApi.set('views',path.join(__dirname,'views'));

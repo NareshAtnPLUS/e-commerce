@@ -21,6 +21,12 @@ export class HttpHandlerService {
     private flashMessage:NgFlashMessageService,
     private authService:AuthService
   ) { }
+  uploadMediaFile(file){
+    console.log('file',file)
+    const formData = new  FormData();
+    formData.append('file',file);
+    console.log(formData);
+  }
   addMobileHandler(product){
     product.type = "Mobile"
     console.log(product)
