@@ -8,6 +8,7 @@ import { Res as ResLogin } from '../components/account/login/login.component';
 import { Res as ResForgotPassword } from '../components/account/forgot-password/forgot-password.component';
 import { Res as ResOtp } from '../components/account/forgot-password/otp/otp.component';
 import { Res as ResUpdatePassword } from '../components/account/forgot-password/update-password/update-password.component';
+import { Res as ResMobile } from '../components/supplier/add-products/mobile/mobile.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +23,8 @@ export class HttpHandlerService {
   ) { }
   addMobileHandler(product){
     product.type = "Mobile"
-    const req = this.http.post<ResOtp>('http://localhost:3000/supplier/add-product', product).subscribe(
+    console.log(product)
+    const req = this.http.post<ResMobile>('http://localhost:3000/supplier/add-product', product).subscribe(
       res => {
         console.log(res);// suplier address nad name
         if (res.success) {

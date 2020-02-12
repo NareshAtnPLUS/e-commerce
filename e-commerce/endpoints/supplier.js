@@ -3,10 +3,21 @@ const supplier = express.Router();
 const Supplier = require('../models/supplier');
 const Mobile = require('../models/mobile')
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 
+const storage = multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'../uploads');
+    },
+    filename:function(req,file,cb){
+        cb(null,file.filename);
+    }
+})
+const upload = multer({storage});
 const config = require('../config/database')
 
 supplier.post('/register',(req, res, next) => {
+    
     let newUser = new Supplier({
         firstName:req.body.firstName,
         lastName:req.body.lastName,
@@ -22,36 +33,10 @@ supplier.post('/register',(req, res, next) => {
         }
     });    
 });
-supplier.post('/add-product',(req,res,next) => {
-    console.log('req.body',req.body)
+supplier.post('/add-product',upload.single('productImage'),(req,res,next) => {
+    console.log(req.body);
     let newProduct = new Mobile(req.body)
-    productPromise = new Promise((resolve,reject) => {
-        newProduct.save((err)=>{
-            if(err){
-                throw err;
-            } else {
-                resolve('Saved in MongoDB');
-            }
-        })
-        
-    });
-    productPromise
-        .then((successMsg)=>{
-            console.log(successMsg)
-        })
-        .catch((err)=>{
-            res.json({
-                success:false,
-                msg:'Invalid Entry to the database'
-            })
-        })
-        .finally(()=>{
-            res.json({
-                success:true,
-                msg:'Added Mobile to the products'
-            })
-        })
-
+    
     
 })
 supplier.post('/authenticate',(req, res, next) => {

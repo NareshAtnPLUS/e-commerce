@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { HttpHandlerService } from 'src/app/services/http-handler.service';
+export interface Res {
+  success: boolean;
+  msg:  String;
+}
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
@@ -17,6 +21,7 @@ export class MobileComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  productImage = new FormControl();
   colorCtrl = new FormControl();
   filteredcolors: Observable<string[]>;
   colors: string[] = ['Black'];
@@ -24,7 +29,7 @@ export class MobileComponent implements OnInit {
 
   @ViewChild('colorInput', {static: false}) colorInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
-
+  selectedFile = null;
   mobileForm:FormGroup;
   constructor(
     private fb:FormBuilder,
@@ -129,6 +134,10 @@ export class MobileComponent implements OnInit {
     this.colorInput.nativeElement.value = '';
     this.colorCtrl.setValue(null);
   }
+  onFileSelected(e){
+    this.selectedFile = e.target.files[0];
+    console.log(this.selectedFile)
+  }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -137,6 +146,7 @@ export class MobileComponent implements OnInit {
   }
   async onAddMobileSubmit(){
     this.mobileForm.value.colors = this.colors
+    this.mobileForm.value.productImage = this.selectedFile;
     await this.httpHandler.addMobileHandler(this.mobileForm.value);
   }
 }

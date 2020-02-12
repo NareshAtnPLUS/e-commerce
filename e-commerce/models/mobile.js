@@ -15,6 +15,9 @@ const MobileSchema = mongoose.Schema({
             //unique:true
         },        
     },
+    productImage:{
+        type:String,
+    },
     colors: {
         type:Array
     },
