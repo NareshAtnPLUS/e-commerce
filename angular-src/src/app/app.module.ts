@@ -11,15 +11,13 @@ import { AccountComponent } from './components/account/account.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { RegisterComponent } from './components/account/register/register.component';
-import { MaterialModule } from './theme/material/material.module';
+import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { RegisterService } from './services/register.service';
 import { NgFlashMessagesModule } from 'ng-flash-messages';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guard/auth.guard';
-import { GithubService } from './services/github.service';
 import { ForgotPasswordComponent } from './components/account/forgot-password/forgot-password.component';
 import { OtpComponent } from './components/account/forgot-password/otp/otp.component';
 import { UpdatePasswordComponent } from './components/account/forgot-password/update-password/update-password.component';
@@ -58,14 +56,12 @@ import { HttpHandlerService } from './services/http-handler.service';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    MDBBootstrapModule.forRoot(),
     NgFlashMessagesModule.forRoot()
   ],
   providers: [
     RegisterService,
     AuthService,
     AuthGuard,
-    GithubService,
     HttpHandlerService
   ],
   bootstrap: [AppComponent]

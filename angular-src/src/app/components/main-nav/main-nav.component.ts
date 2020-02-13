@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NgFlashMessageService } from 'ng-flash-messages';
-import { HttpClient } from '@angular/common/http';
+
 import { AuthService } from 'src/app/services/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-nav',

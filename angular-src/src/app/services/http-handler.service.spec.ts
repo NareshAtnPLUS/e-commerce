@@ -3,10 +3,14 @@ import { TestBed } from '@angular/core/testing';
 import { HttpHandlerService } from './http-handler.service';
 
 describe('HttpHandlerService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: HttpHandlerService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(HttpHandlerService);
+  });
 
   it('should be created', () => {
-    const service: HttpHandlerService = TestBed.get(HttpHandlerService);
     expect(service).toBeTruthy();
   });
 });

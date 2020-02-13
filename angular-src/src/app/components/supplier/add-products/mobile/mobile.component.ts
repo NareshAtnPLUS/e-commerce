@@ -1,11 +1,13 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Validators, FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ArrayType } from '@angular/compiler';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
-import { Observable } from 'rxjs';
+
 import { startWith, map } from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { HttpHandlerService } from 'src/app/services/http-handler.service';
+import { Observable } from 'rxjs';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
@@ -21,7 +23,6 @@ export class MobileComponent implements OnInit {
   filteredcolors: Observable<string[]>;
   colors: string[] = ['Black'];
   allcolors: string[] = ['White', 'Red', 'Aqua'];
-
   @ViewChild('colorInput', {static: false}) colorInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
 

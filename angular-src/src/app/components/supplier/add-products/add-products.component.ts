@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-add-products',
@@ -7,11 +6,10 @@ import { Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['./add-products.component.scss']
 })
 export class AddProductsComponent implements OnInit {
-  
-  constructor(private fb:FormBuilder) { }
 
-  ngOnInit() {
+  constructor() { }
+
+  ngOnInit(): void {
   }
-  
 
 }
