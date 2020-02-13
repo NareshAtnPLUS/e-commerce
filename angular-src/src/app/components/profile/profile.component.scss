@@ -67,6 +67,10 @@
   margin:0rem 1rem 0rem 1.5rem;
   @include mat-elevation(3);
 }
+.spacer{
+  flex: 1 1 auto;
+}
+
 .container{
   width:80%;
   margin: auto;

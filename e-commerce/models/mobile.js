@@ -120,16 +120,30 @@ const MobileSchema = mongoose.Schema({
             required:true
         },
     },
-    seller:[
+    sellers:[
         {
-            name:{
+            userName:{
                 type:String,
                 required:true
             },
-            address:{
-                type:String,
-                required:true
-            },            
+            address:[{
+                doorNo:{
+                    type:String,
+                    require:true
+                },
+                street:{
+                    type:String,
+                    require:true
+                },
+                district:{
+                    type:String,
+                    require:true
+                },
+                state:{
+                    type:String,
+                    require:true
+                }
+            }]
         }
     ]
 });

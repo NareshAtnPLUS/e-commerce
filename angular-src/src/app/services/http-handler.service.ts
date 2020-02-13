@@ -8,6 +8,7 @@ import { Res as ResLogin } from '../components/account/login/login.component';
 import { Res as ResForgotPassword } from '../components/account/forgot-password/forgot-password.component';
 import { Res as ResOtp } from '../components/account/forgot-password/otp/otp.component';
 import { Res as ResUpdatePassword } from '../components/account/forgot-password/update-password/update-password.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,19 +19,33 @@ export class HttpHandlerService {
     private http:HttpClient,
     private registerService:RegisterService,
     private flashMessage:NgFlashMessageService,
-    private authService:AuthService
+    private authService:AuthService,
+    private snackbar:MatSnackBar
   ) { }
-  addMobileHandler(product){
+  openSnackBar(message: string, action: string) {
+    this.snackbar.open(message, action, {
+      duration: 2000,
+    });
+  }
+  async addMobileHandler(product){
     product.type = "Mobile"
+    const user = await JSON.parse(this.authService.getToken())
+    console.log(product)
+    const sellers = [];
+    sellers.push({userName:user.userName,address:user.address}) 
+    product.sellers = sellers;
+    console.log(product)
     const req = this.http.post<ResOtp>('http://localhost:3000/supplier/add-product', product).subscribe(
       res => {
         console.log(res);// suplier address nad name
         if (res.success) {
+          const msg = 'Product successfully added!';
+          this.openSnackBar(msg,"Success!");
           this.flashMessage.showFlashMessage({
-          messages: ['Product successfully added!'],
+          messages: [],
           dismissible: true, timeout: 3000, type: 'success'
           });
-        this.router.navigate(['/supplier/add-products']);
+        this.router.navigate(['/profile']);
         // console.log(res.msg, res.user);
         } else {
           
@@ -152,14 +167,18 @@ export class HttpHandlerService {
       res => {
         // console.log(res.success,res.msg);
         if (res.success) {
-          this.authService.storeUserData(res.msg, res.user);
+          console.log(res);
+          this.authService.storeUserData(res.token, res.user);
+          const msg = 'You Are Now Logged In';
+          const value="Success!";
+          this.openSnackBar(msg,value);
           this.flashMessage.showFlashMessage({
-          messages: ['You Are Now Logged In'],
+          messages: [],
           dismissible: true, timeout: 3000, type: 'success'
           });
           if(user.accountType === 'User') this.router.navigate(['/profile']);
           else if(user.accountType === 'Admin') this.router.navigate(['/admin']);
-          else if(user.accountType === 'Supplier') this.router.navigate(['/supplier']);
+          else if(user.accountType === 'Supplier') this.router.navigate(['/profile']);
         //console.log(res.msg, res.user);
         } else {
           this.flashMessage.showFlashMessage({
@@ -199,8 +218,11 @@ export class HttpHandlerService {
     const req = this.http.post( url, user).subscribe(
       res => {
         // console.log(res);
+        const msg = 'You Are Now Registered and can Login'
+        const value = "Success"
+        this.openSnackBar(msg,value)
         this.flashMessage.showFlashMessage({
-          messages: ['You Are Now Registered and can Login'],
+          messages: [msg],
           dismissible: true, timeout: 3000, type: 'success'
           });
         this.router.navigate(['/account/login']);

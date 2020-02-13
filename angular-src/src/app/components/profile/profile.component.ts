@@ -19,9 +19,13 @@ export class ProfileComponent implements OnInit {
     private fb:FormBuilder,
     private http:HttpClient,
     private authService:AuthService,
-    ) {  }
-  githubUsers:any
+    ) {  
+      this.user = JSON.parse(this.authService.getToken());
+    }
+  user:any;
   ngOnInit() {
+    console.log(this.user)
+    
   }
   onSubmit(){
     const { userName } = this.profileSearchForm.value

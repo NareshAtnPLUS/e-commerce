@@ -114,8 +114,14 @@ body {
 }
 footer {
   background-color:#8d0263;
-  position:fixed;
+  position: fixed;
   bottom:0px;
   text-align: center;
   width:100%;
+  
+  padding: 2rem;
+}
+main{
+  margin-top: 3rem;
+  margin-bottom: 15rem;
 }

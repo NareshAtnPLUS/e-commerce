@@ -59,7 +59,7 @@
                 <mat-form-field class="option-list">
                     <mat-label>State</mat-label>
                     <mat-select formControlName="state">
-                        <mat-option  *ngFor="let state of country" value="state.value">
+                        <mat-option  *ngFor="let state of country" value="{{state.value}}">
                             {{state.viewValue}}
                         </mat-option>
                     </mat-select>
@@ -67,7 +67,7 @@
                 <mat-form-field class="option-list">
                     <mat-label>District</mat-label>
                     <mat-select formControlName="district">
-                        <mat-option  *ngFor="let district of state" value="district.value">
+                        <mat-option  *ngFor="let district of state" value="{{district.value}}">
                             {{district.viewValue}}
                         </mat-option>
                     </mat-select>
