@@ -32,7 +32,7 @@ const UserSchema = mongoose.Schema({
     otp:{
         type:String,
     },
-    address:{
+    address:[{
         doorNo:{
             type:String,
             require:true
@@ -49,7 +49,7 @@ const UserSchema = mongoose.Schema({
             type:String,
             require:true
         }
-    }
+    }]
 
 });
 

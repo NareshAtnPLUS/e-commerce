@@ -67,7 +67,7 @@ export class RegisterComponent implements AfterViewInit {
         next:async function(data:string){
           console.log(data)
           
-          const res = await axios.post('http://localhost:3000/users/check_username',{username:data});
+          const res = await axios.post('http://localhost:3000/user/check_username',{username:data});
             
           console.log(res.data)
           if(res.data.success){

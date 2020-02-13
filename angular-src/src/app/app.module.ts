@@ -27,6 +27,7 @@ import { SupplierComponent } from './components/supplier/supplier.component';
 import { AddProductsComponent } from './components/supplier/add-products/add-products.component';
 import { MobileComponent } from './components/supplier/add-products/mobile/mobile.component';
 import { HttpHandlerService } from './services/http-handler.service';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { HttpHandlerService } from './services/http-handler.service';
     SupplierComponent,
     AddProductsComponent,
     MobileComponent,
+    FooterComponent,
     
   ],
   imports: [

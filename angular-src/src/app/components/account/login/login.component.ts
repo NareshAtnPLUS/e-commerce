@@ -8,7 +8,7 @@ import { HttpHandlerService } from 'src/app/services/http-handler.service';
 export interface Res {
   success: boolean;
   user: Object;
-  msg:  String;
+  token:  String;
 }
 @Component({
   selector: 'app-login',

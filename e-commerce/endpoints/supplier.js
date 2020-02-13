@@ -17,14 +17,16 @@ const upload = multer({storage:storage});
 const config = require('../config/database')
 
 supplier.post('/register',(req, res, next) => {
-    
+    console.log(req.body)
     let newUser = new Supplier({
         firstName:req.body.firstName,
         lastName:req.body.lastName,
         email:req.body.email,
         userName:req.body.userName,
         password:req.body.password,
+        address:[req.body.address]
     });
+    console.log(newUser)
     Supplier.addUser(newUser, (err,user) =>{
         if (err){
             res.json({success:false,msg:'Failed to register user'});
@@ -81,11 +83,14 @@ supplier.post('/authenticate',(req, res, next) => {
                 res.json({
                     success:true,
                     token:'JWT '+token,
-                    user: {
-                        id:user._id,
-                        name:user.firstName,
-                        username:user.username,
-                        email:user.email
+                    user:{
+                        _id:user._id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email:user.email,
+                        userName: user.userName,
+                        address:user.address,
+                        accountType:"Supplier",
                     }
                 });
             } else {
