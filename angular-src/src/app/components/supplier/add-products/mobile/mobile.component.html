@@ -4,7 +4,6 @@
             <mat-card-title>Add Mobile</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            
             <form [formGroup]="mobileForm" (ngSubmit)=onAddMobileSubmit();>
                 <div formGroupName="general" id="general" class="row">
                     <div class="row">
@@ -23,7 +22,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    
                     <mat-form-field class="example-chip-list">
                         <mat-chip-list #chipList aria-label="color selection">
                           <mat-chip
@@ -160,10 +158,9 @@
                         <input matInput type="text" formControlName="brandWarranty" name="brandWarranty" class="form-control" id="brandWarranty" placeholder="1" required>
                     </mat-form-field>
                 </div>
-                <button type="submit"  mat-raised-button color="accent">Add Mobile &nbsp;&nbsp;<i class="material-icons">input</i></button>
+                <button type="submit" [disabled]="!mobileForm.valid"  mat-raised-button color="accent">Add Mobile &nbsp;&nbsp;<i class="material-icons">input</i></button>
             </form>
-            <app-product-image></app-product-image>
         </mat-card-content>
     </mat-card>
 </div>
-<!--[disabled]="!mobileForm.valid"-->
+<!---->

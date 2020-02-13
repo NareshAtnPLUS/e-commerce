@@ -1,15 +1,13 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Validators, FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ArrayType } from '@angular/compiler';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
-import { Observable } from 'rxjs';
+
 import { startWith, map } from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { HttpHandlerService } from 'src/app/services/http-handler.service';
-export interface Res {
-  success: boolean;
-  msg:  String;
-}
+import { Observable } from 'rxjs';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
@@ -21,15 +19,13 @@ export class MobileComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  
   colorCtrl = new FormControl();
   filteredcolors: Observable<string[]>;
   colors: string[] = ['Black'];
   allcolors: string[] = ['White', 'Red', 'Aqua'];
-  
   @ViewChild('colorInput', {static: false}) colorInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
-  
+
   mobileForm:FormGroup;
   constructor(
     private fb:FormBuilder,
@@ -134,18 +130,14 @@ export class MobileComponent implements OnInit {
     this.colorInput.nativeElement.value = '';
     this.colorCtrl.setValue(null);
   }
-  
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.allcolors.filter(color => color.toLowerCase().indexOf(filterValue) === 0);
   }
-  
   async onAddMobileSubmit(){
     this.mobileForm.value.colors = this.colors
-    
     await this.httpHandler.addMobileHandler(this.mobileForm.value);
-    // await this.httpHandler.
-    
   }
 }
