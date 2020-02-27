@@ -1,7 +1,7 @@
 const express = require('express');
 const supplier = express.Router();
 const Supplier = require('../models/supplier');
-const Mobile = require('../models/mobile')
+const Mobile = require('../models/mobile');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 

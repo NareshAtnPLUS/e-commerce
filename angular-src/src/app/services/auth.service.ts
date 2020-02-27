@@ -40,6 +40,12 @@ export class AuthService {
     this.authToken = token;
     this.user = user;
   }
+  storeProuductData(product){
+    sessionStorage.setItem('buy-product',JSON.stringify(product))
+  }
+  getProductData(){
+    return JSON.parse(sessionStorage.getItem("buy-product"))
+  }
   logout() {
     this.authToken = null;
     this.user = null;

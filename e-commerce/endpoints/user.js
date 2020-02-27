@@ -19,13 +19,10 @@ user.post('/register',(req, res, next) => {
         email:req.body.email,
         userName:req.body.userName,
         password:req.body.password,
-        address:{
-            doorNo:req.body.doorNo,
-            street:req.body.street,
-            state:req.body.state,
-            district:req.body.district
-        }
+        address:[req.body.address]
+            
     });
+    console.log(newUser,req.body.address);
     User.addUser(newUser, (err,user) =>{
         if (err){
             res.json({success:false,msg:'Failed to register user'});
@@ -112,9 +109,12 @@ user.post('/authenticate',(req, res, next) => {
                     token:'JWT '+token,
                     user: {
                         id:user._id,
-                        name:user.firstName,
-                        username:user.username,
-                        email:user.email
+                        firstName:user.firstName,
+                        lastName:user.lastName,
+                        username:user.userName,
+                        email:user.email,
+                        accountType:"User",
+                        address:user.address
                     }
                 });
             } else {

@@ -1,1 +1,21 @@
-<p>home works!</p>
+<div *ngFor="let mobile of products.mobile" class="home-container">
+  <mat-card class="example-card">
+    <mat-card-header>
+      
+      <mat-card-title><h2>{{mobile.general.brand}}</h2></mat-card-title>
+      <mat-card-subtitle><h3>{{mobile.general.modelName}}</h3></mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="./../../../assets/no-image.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      
+        <pre>
+          {{ mobile | json}}
+        </pre>
+      
+    </mat-card-content>
+    <mat-card-actions>
+      <button color="accent" (click)="onBuySubmit(mobile)" mat-raised-button>Buy Now</button>
+      <button color="accent" *ngIf="authService.isLoggedIn()" mat-raised-button>Add to cart</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
