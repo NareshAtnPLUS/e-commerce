@@ -30,6 +30,7 @@ import { HttpHandlerService } from './services/http-handler.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { BuyProductsComponent } from './components/buyer/buy-products/buy-products.component';
 import { CartComponent } from './components/cart/cart.component';
+import { SuppProfileComponent } from './components/supp-profile/supp-profile.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CartComponent } from './components/cart/cart.component';
     FooterComponent,
     BuyProductsComponent,
     CartComponent,
+    SuppProfileComponent,
     
   ],
   imports: [
