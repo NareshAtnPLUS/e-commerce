@@ -21,6 +21,7 @@ mongoose.connection.on('error', (err)=> {
 const users = require('./endpoints/user');
 const admins = require('./endpoints/admin');
 const suppliers = require('./endpoints/supplier');
+const product = require('./endpoints/products');
 
 const restApi = express();
 
@@ -46,6 +47,7 @@ require('./config/passport')(passport);
 restApi.use('/user',users);
 restApi.use('/admin',admins);
 restApi.use('/supplier',suppliers);
+restApi.use('/products',product);
 
 restApi.get('/',(req,res) => {
     res.send('Invalid Endpoint');

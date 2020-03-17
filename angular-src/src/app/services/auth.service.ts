@@ -36,9 +36,27 @@ export class AuthService {
   }
   storeUserData(token, user) {
     sessionStorage.setItem('id_token', token);
+    user.cartList = 'Cart is Empty'
     sessionStorage.setItem('user', JSON.stringify(user));
     this.authToken = token;
     this.user = user;
+  }
+  addToCart(product){
+    var user = JSON.parse(sessionStorage.getItem("user"))
+    delete user.cartList;
+    user.cartList = []
+    user.cartList.push(product)
+    sessionStorage.setItem("user",JSON.stringify(user))
+  }
+  retriveCart(){
+    var user = JSON.parse(sessionStorage.getItem("user"))
+    return user.cartList;
+  }
+  storeProuductData(product){
+    sessionStorage.setItem('buy-product',JSON.stringify(product))
+  }
+  getProductData(){
+    return JSON.parse(sessionStorage.getItem("buy-product"))
   }
   logout() {
     this.authToken = null;
@@ -51,6 +69,7 @@ export class AuthService {
   sendTokenUpdatePassword(token:string){
     sessionStorage.setItem("UpdatePassword",token)
   }
+
   getToken() {
     return sessionStorage.getItem("user")
   }

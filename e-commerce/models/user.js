@@ -32,6 +32,34 @@ const UserSchema = mongoose.Schema({
     otp:{
         type:String,
     },
+    ordersPlaced:[{
+        doorNo:{
+            type:String,
+        },
+        street:{
+            type:String,
+        },
+        district:{
+            type:String,
+        },
+        state:{
+            type:String,
+        },
+        variant:{
+            type:Object
+        },
+        product:{
+            type:Object
+        }
+    }],
+    etherAccount:{
+        address:{
+            type:String
+        },
+        balance:{
+            type:String
+        }
+    },
     address:[{
         doorNo:{
             type:String,

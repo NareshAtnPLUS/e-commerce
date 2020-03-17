@@ -14,11 +14,15 @@ import { AdminComponent } from './components/admin/admin.component';
 import { SupplierComponent } from './components/supplier/supplier.component';
 import { AddProductsComponent } from './components/supplier/add-products/add-products.component';
 import { MobileComponent } from './components/supplier/add-products/mobile/mobile.component';
+import { BuyProductsComponent } from './components/buyer/buy-products/buy-products.component';
+import { CartComponent } from './components/cart/cart.component';
 
 
 const routes: Routes = [
   { path:'',component:HomeComponent },
   { path:'admin',component:AdminComponent,canActivate:[AuthGuard] },
+  { path:'cart',component:CartComponent,canActivate:[AuthGuard] },
+  { path:'buy-product',component:BuyProductsComponent,canActivate:[AuthGuard] },
   { path:'offer-zone',component:OfferComponent },
   { path:'supplier',component:SupplierComponent,canActivate:[AuthGuard],children:[
     { path:'add-products',component:AddProductsComponent,canActivate:[AuthGuard],children:[
