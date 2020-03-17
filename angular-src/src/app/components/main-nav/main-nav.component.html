@@ -29,6 +29,7 @@
       <div class="navbar" *ngIf="!(isHandset$ | async)">
         <button mat-button (click)="onClick" [routerLinkActive]="['active']" routerLink="/">Home</button>
         <button mat-button (click)="onClick" [routerLinkActive]="['active']" routerLink="/profile">Profile</button>
+        <button mat-button *ngIf="authService.isLoggedIn()" matBadge="{{cartLength}}" matBadgePosition="after" matBadgeColor="accent" [routerLinkActive]="['active']" routerLink="/cart">Cart</button>
         <button mat-button *ngIf="!authService.isLoggedIn()" (click)="onClick" [routerLinkActive]="['active']" routerLink="/account/login">Account</button>
         <button mat-button *ngIf="authService.isLoggedIn()" (click)="onLogoutClick()" [routerLinkActive]="['active']" routerLink="/account">Logout</button>
       </div>

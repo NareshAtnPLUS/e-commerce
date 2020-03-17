@@ -52,6 +52,14 @@ const UserSchema = mongoose.Schema({
             type:Object
         }
     }],
+    etherAccount:{
+        address:{
+            type:String
+        },
+        balance:{
+            type:String
+        }
+    },
     address:[{
         doorNo:{
             type:String,

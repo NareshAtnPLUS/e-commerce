@@ -7,6 +7,7 @@ import { NgFlashMessageService } from 'ng-flash-messages';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { HttpHandlerService } from 'src/app/services/http-handler.service';
 
 @Component({
   selector: 'app-main-nav',
@@ -26,9 +27,27 @@ export class MainNavComponent {
     private router: Router,
     private flashMessage: NgFlashMessageService,
     private http: HttpClient,
+    private httpHandler:HttpHandlerService,
     private authService: AuthService
-    ) {}
-  
+    ) {
+      const observer = {
+        next:function(data:{items:[]}){
+          this.cartLength = data.items.length
+        },
+        error:function(err){
+          this.cartLength =0;
+        }
+      }
+      const user = JSON.parse(this.authService.getToken())
+      if(!user){ 
+        this.cartLength = 0
+      } else {
+        this.httpHandler.cartItemsHandler().subscribe(observer)
+        console.log('Cart Length',this.cartLength)
+      }
+    }
+  cartLength:any;
+  cart:any;
     onLogoutClick() {
       this.authService.logout();
       this.flashMessage.showFlashMessage({

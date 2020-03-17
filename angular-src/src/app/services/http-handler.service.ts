@@ -16,6 +16,10 @@ export interface Products{
   status:true,
   products:any
 }
+export interface ResCartItems{
+  status:true,
+  items:[]
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -44,6 +48,13 @@ export class HttpHandlerService {
       .pipe(retry(2),
       catchError(this.errorHandler)
     )
+  }
+  cartItemsHandler():Observable<ResCartItems>{
+    const user = JSON.parse(this.authService.getToken())
+    const url = `${this.baseUrl}/user/fetchCart`;
+    return this.http.post<ResCartItems>(url,{userName:user.username},this.httpOptions)
+      .pipe(retry(2),
+      catchError(this.errorHandler))
   }
   errorHandler(error){
     let errorMessage = '';
@@ -95,6 +106,7 @@ export class HttpHandlerService {
         this.router.navigate(['/supplier/add-products/add-mobile']);
      });    
   }
+
   updatePasswordHandler(updatePasswordForm){
     if(this.registerService.validateUpdatePassword(updatePasswordForm.value)){
       // console.log(this.updatePasswordForm.value);
@@ -234,6 +246,7 @@ export class HttpHandlerService {
       return false
     }
     const url = `${this.baseUrl}/products/orderMobile`;
+    console.log(order)
     const req = this.http.post<ResBuyProduct>( url, order,this.httpOptions).subscribe(
       res => {
         // console.log(res);
@@ -256,6 +269,36 @@ export class HttpHandlerService {
           });
         this.router.navigate(['/']);
       });
+  }
+  
+  addToCartHandler(product){
+    const user = JSON.parse(this.authService.getToken())
+  
+    const cartObject = {
+      userName: user.username,
+      product
+    }
+    console.log(cartObject)
+    const url = `${this.baseUrl}/user/addToCart`;
+    const req = this.http.post(url,cartObject,this.httpOptions).subscribe(
+      res => {
+        console.log(res)
+        const msg = "Added to cart Sucessfully"
+        const value = "Success";
+        this.openSnackBar(msg,value)
+        this.flashMessage.showFlashMessage({
+          messages: [msg],
+          dismissible: true, timeout: 3000, type: 'success'
+        });
+      },
+      err=>{
+        console.log('Error Occured');
+        this.flashMessage.showFlashMessage({
+          messages: ['Something Went Wrong'],
+          dismissible: true, timeout: 3000, type: 'danger'
+        });
+      }
+    )
   }
   registerHttpHandler(user,accountType,profileForm){
     if(!this.registerService.validateEmail(user.email)){

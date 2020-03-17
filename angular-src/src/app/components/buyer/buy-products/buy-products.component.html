@@ -3,11 +3,16 @@
         <div class="row">
             <mat-radio-group class="order-radio-group" [(ngModel)]="variant">
                 <mat-radio-button class="order-radio-button" *ngFor="let variant of variants" [value]="variant">
-                    {{variant | json}}
+                    <div><h2>Price: ₹.{{ variant.price }}</h2></div>
+                    <div><h2>Internal Storage: {{ variant.internalStorage }}GB</h2></div>
+                    <div><h2>Expandable Memory: {{ variant.expandableMemory }}GB</h2></div>
+                    <div><h2>RAM: {{ variant.ram }}GB</h2></div>
+                    &nbsp;&nbsp;
+
                 </mat-radio-button>
             </mat-radio-group>
         </div>
-        <div><pre>You've selected : {{variant | json}}</pre></div>
+        <div><h4>You've selected : {{variant.internalStorage}}GB ROM and {{variant.ram}}GB RAM </h4></div>
         <form [formGroup]="orderForm" (ngSubmit)="onOrderSubmit()">
             <div class="row">
                 <mat-form-field class="reg-full-width">

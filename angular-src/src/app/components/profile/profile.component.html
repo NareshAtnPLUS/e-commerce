@@ -10,7 +10,7 @@
             <mat-card-content>
                 <mat-list>
                     <mat-list-item>
-                        <span class="key"><h3>Supplier ID</h3></span>
+                        <span class="key"><h3>{{user.accountType}} ID</h3></span>
                         <span class="spacer"></span>
                         <span class="value"><h5> {{user.id}}</h5></span>
                       </mat-list-item>
@@ -28,6 +28,11 @@
                         <span class="key"><h3>Username</h3></span>
                         <span class="spacer"></span>
                         <span class="value"><h5> {{user.username}} </h5></span>
+                      </mat-list-item>
+                      <mat-list-item>
+                        <span class="key"><h3>Ether Balance</h3></span>
+                        <span class="spacer"></span>
+                        <span class="value"><h5> {{user.balance}} ETH </h5></span>
                       </mat-list-item>
                       <div *ngFor="let addressElement of user.address">
                         <mat-list-item>
@@ -54,6 +59,27 @@
                   </mat-list>
             </mat-card-content>
         </mat-card>
+        <br>
+        <mat-accordion class="profile-card">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h3>Orders Placed</h3>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <h3>You've {{ user.ordersPlaced.length }} Orders</h3>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngFor="let order of user.ordersPlaced">
+                    <div><h4 class="order-key">Order ID</h4> &nbsp;&nbsp;&nbsp;&nbsp;<p class="order-value">{{order._id}}</p></div>
+                    <div><h4 class="order-key">Ordered Product</h4> &nbsp;&nbsp;&nbsp;&nbsp;<p class="order-value">{{order.product.brand}} {{order.product.modelName}} {{order.product.modelNumber}}</p></div>
+                    <div><h4 class="order-key">Delivery Address</h4> &nbsp;&nbsp;&nbsp;&nbsp;<p class="order-value">{{order.doorNo}} {{order.street}} {{order.district}}</p></div>
+                    <div><hr></div>
+                    
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
         <mat-card class="nav-card">
             <mat-card-header>
                 <div mat-card-avatar class="avatar"></div>

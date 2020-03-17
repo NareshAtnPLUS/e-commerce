@@ -23,6 +23,7 @@ export class BuyProductsComponent implements OnInit {
     product:any;
     variant:String;
     userName:string;
+    cartId:any
   }
   isLinear=true;
   product:any
@@ -60,6 +61,7 @@ export class BuyProductsComponent implements OnInit {
     this.orderInfo.userName = this.user.username
     this.orderInfo.variant = this.variant
     this.orderInfo.product = this.product.general
+    this.orderInfo.cartId = this.product.cartId
     this.httpHandler.orderMobileHttpHandler(this.orderInfo)
 
   }

@@ -2,6 +2,7 @@ const express = require('express');
 const user = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
+const Cart = require('../models/cart');
 const Admin = require('../models/admin');
 const Supplier = require('../models/supplier');
 const jwt = require('jsonwebtoken');
@@ -10,17 +11,64 @@ const config = require('../config/database')
 const authenticator = require('otplib').authenticator
 const totp = require('otplib').totp
 const secret = authenticator.generateSecret();
+const Web3 = require('web3');
+const accountAddress1 = '0xa106Cac9F8A56e9ac0B0B1a98e6c726Ced15f1ce';
+const accountAddress2 = '0x635e9B7435839CA399919D39487e95387fA175Df';
+const web3 = new Web3('http://127.0.0.1:8545') ;
 
+user.post('/fetchCart',(req,res,next)=> {
+    const query = {userName:req.body.userName}
 
-user.post('/register',(req, res, next) => {
+    Cart.find(query,(err,items)=> {
+        if(!err){
+            res.json({
+                status:true,
+                items
+            })
+        } else {
+            res.json({
+                status:false,
+                items:null
+            })
+        }
+    })
+})
+user.post('/addToCart',(req,res)=> {
+    console.log('Cart',req.body,'cart')
+    let newCart = new Cart({
+        userName:req.body.userName,
+        product:req.body.product
+    })
+    console.log(newCart)
+    newCart
+        .save()
+        .then(()=>{
+            res.json({
+                success:true,
+                msg:"Product Added to Cart Successfully"
+            })
+        })
+        .catch(err => {
+            res.json({
+                success:false,
+                msg:"Failed to add to cart"
+            })
+            console.error(err)
+        })
+
+})
+user.post('/register',async (req, res, next) => {
     let newUser = new User({
         firstName:req.body.firstName,
         lastName:req.body.lastName,
         email:req.body.email,
         userName:req.body.userName,
         password:req.body.password,
-        address:[req.body.address]
-            
+        address:[req.body.address],
+        etherAccount:{
+            address:accountAddress2,
+            balance:await web3.eth.getBalance(accountAddress1)
+        }
     });
     console.log(newUser,req.body.address);
     User.addUser(newUser, (err,user) =>{
@@ -114,7 +162,9 @@ user.post('/authenticate',(req, res, next) => {
                         username:user.userName,
                         email:user.email,
                         accountType:"User",
-                        address:user.address
+                        address:user.address,
+                        balance:web3.utils.fromWei(user.etherAccount.balance.toString(),'ether'),
+                        ordersPlaced:user.ordersPlaced
                     }
                 });
             } else {

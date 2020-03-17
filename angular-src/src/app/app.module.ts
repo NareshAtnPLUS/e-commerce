@@ -29,6 +29,7 @@ import { MobileComponent } from './components/supplier/add-products/mobile/mobil
 import { HttpHandlerService } from './services/http-handler.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { BuyProductsComponent } from './components/buyer/buy-products/buy-products.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { BuyProductsComponent } from './components/buyer/buy-products/buy-produc
     MobileComponent,
     FooterComponent,
     BuyProductsComponent,
+    CartComponent,
     
   ],
   imports: [
