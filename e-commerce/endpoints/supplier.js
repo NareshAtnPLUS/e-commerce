@@ -4,7 +4,8 @@ const Supplier = require('../models/supplier');
 const Mobile = require('../models/mobile');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
-
+const Web3 = require('web3');
+const web3 = new Web3('http://127.0.0.1:8545') ;
 const storage = multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,'../uploads');
@@ -15,8 +16,9 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage:storage});
 const config = require('../config/database')
+const supplierAddress = '0xECe154630D91C2fF43Fa0b7Dcf6330eE5c2d35da';
 
-supplier.post('/register',(req, res, next) => {
+supplier.post('/register',async(req, res, next) => {
     console.log(req.body)
     let newUser = new Supplier({
         firstName:req.body.firstName,
@@ -24,7 +26,11 @@ supplier.post('/register',(req, res, next) => {
         email:req.body.email,
         userName:req.body.userName,
         password:req.body.password,
-        address:[req.body.address]
+        address:[req.body.address],
+        etherAccount:{
+            address:supplierAddress,
+            balance:await web3.eth.getBalance(supplierAddress)
+        }
     });
     console.log(newUser)
     Supplier.addUser(newUser, (err,user) =>{
@@ -74,23 +80,26 @@ supplier.post('/authenticate',(req, res, next) => {
         if (!user) {
             return res.json({success:false,msg:'User not Found'});
         }
-        Supplier.comparePassword(password, user.password, (err,isMatch) => {
+        Supplier.comparePassword(password, user.password,async (err,isMatch) => {
             if (err) throw err;
             if (isMatch) {
                 const token = jwt.sign(user.toJSON(),config.secret,{
                     expiresIn:10 // 1 day in seconds
                 });
+                var supplierBalance = await web3.eth.getBalance(user.etherAccount.address)
                 res.json({
                     success:true,
                     token:'JWT '+token,
                     user:{
-                        _id:user._id,
+                        id:user._id,
                         firstName: user.firstName,
                         lastName: user.lastName,
                         email:user.email,
-                        userName: user.userName,
+                        username: user.userName,
                         address:user.address,
                         accountType:"Supplier",
+                        address:user.address,
+                        balance:web3.utils.fromWei(supplierBalance,'ether'),
                     }
                 });
             } else {

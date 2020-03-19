@@ -20,6 +20,9 @@ export class HomeComponent implements OnInit {
       this.products = data
       console.log(this.products.mobile[0].variants,this.products.mobile[0]._id)
     })
+    this.httpHandler.tasksHandler().subscribe((data:{}) => {
+      console.log('tasks',data)
+    })
   }
   ngOnInit(): void {
       var observer = {
