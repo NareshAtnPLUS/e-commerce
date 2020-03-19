@@ -31,6 +31,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { BuyProductsComponent } from './components/buyer/buy-products/buy-products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { SuppProfileComponent } from './components/supp-profile/supp-profile.component';
+import { AdminDashComponent } from './components/admin-dash/admin-dash.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { SuppProfileComponent } from './components/supp-profile/supp-profile.com
     BuyProductsComponent,
     CartComponent,
     SuppProfileComponent,
+    AdminDashComponent,
     
   ],
   imports: [

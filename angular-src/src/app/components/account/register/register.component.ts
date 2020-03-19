@@ -51,11 +51,16 @@ export class RegisterComponent implements AfterViewInit {
     {value:'chennai',viewValue:'Chennai'},
     {value:'kanchipuram',viewValue:'Kanchipuram'},
     {value:'coimbatore',viewValue:'Coimbatore'},
+    {value:'vijayawada',viewValue:'Vijayawada'},
+    {value:'calicut',viewValue:'Calicut'},
+    {value:'mysore',viewValue:'Mysore'},
+    {value:'bangalore',viewValue:'Bangalore'},
   ];
   country:Country[]=[
     {value:'tamilnadu',viewValue:'TamilNadu'},
     {value:'kerala',viewValue:'Kerala'},
     {value:'karnataka',viewValue:'Karnataka'},
+    {value:'andhrapradesh',viewValue:'AndhraPradesh'},
   ];
   textFeildObservable$:any;
   constructor(

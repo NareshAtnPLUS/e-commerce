@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
     }
   user:any;
   ngOnInit() {
-    console.log(this.user)
     
   }
   onSubmit(){

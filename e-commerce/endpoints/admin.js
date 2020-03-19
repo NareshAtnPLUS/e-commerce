@@ -2,9 +2,33 @@ const express = require('express');
 const admin = express.Router();
 const Admin = require('../models/admin');
 const jwt = require('jsonwebtoken');
-
+const Supplier = require('../models/supplier');
 const config = require('../config/database')
-
+const User = require('../models/user');
+admin.get('/getSuppliers',(req,res,next)=>{
+    Supplier.find({},(err,supplier)=>{
+        res.json({
+            success:true,
+            supplier
+        })
+    })
+})
+admin.get('/getUsersOrders',async(req,res,next)=>{
+    let orders = []
+    await User.find({}).then(users => {
+        users.forEach(user => {
+            user.ordersPlaced.forEach(order =>{
+                orders.push(order)
+            })
+            
+        });
+    })
+    res.json({
+        success:true,
+        orders
+    })
+    
+})
 admin.post('/register',(req, res, next) => {
     let newUser = new Admin({
         firstName:req.body.firstName,

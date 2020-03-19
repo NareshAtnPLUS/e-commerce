@@ -55,6 +55,20 @@ export class HttpHandlerService {
       catchError(this.errorHandler)
     )
   }
+  ordersHandler():Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/admin/getUsersOrders`)
+    .pipe(
+      retry(2),
+      catchError(this.errorHandler)
+    )
+  }
+  suppliersHandler():Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/admin/getSuppliers`)
+    .pipe(
+      retry(2),
+      catchError(this.errorHandler)
+    )
+  }
   cartItemsHandler():Observable<ResCartItems>{
     const user = JSON.parse(this.authService.getToken())
     const url = `${this.baseUrl}/user/fetchCart`;
@@ -79,10 +93,14 @@ export class HttpHandlerService {
     const user = await JSON.parse(this.authService.getToken())
     console.log(product)
     const sellers = [];
-    sellers.push({userName:user.userName,address:user.address}) 
+    if(user.userName) {
+      sellers.push({userName:user.userName,address:user.address})
+    } else{
+      sellers.push({userName:user.username,address:user.address})
+    }
     product.sellers = sellers;
     console.log(product)
-    const req = this.http.post<ResOtp>('/supplier/add-product', product,this.httpOptions).subscribe(
+    const req = this.http.post<ResOtp>(`${this.baseUrl}/supplier/add-product`, product,this.httpOptions).subscribe(
       res => {
         console.log(res);// suplier address nad name
         if (res.success) {
@@ -225,7 +243,7 @@ export class HttpHandlerService {
           dismissible: true, timeout: 3000, type: 'success'
           });
           if(user.accountType === 'User') this.router.navigate(['/profile']);
-          else if(user.accountType === 'Admin') this.router.navigate(['/admin']);
+          else if(user.accountType === 'Admin') this.router.navigate(['/adminDash']);
           else if(user.accountType === 'Supplier') this.router.navigate(['/supplierProfile']);
         //console.log(res.msg, res.user);
         } else {

@@ -1,5 +1,5 @@
 module.exports = {
-    database:"mongodb://localhost:27017/userSearchAppData",
+    database:"mongodb://localhost:27017/eCommerceAppData",
     secret:"nplusCodes"
 }
 //for local database

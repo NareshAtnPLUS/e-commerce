@@ -49,7 +49,15 @@ const SupplierSchema = mongoose.Schema({
             type:String,
             require:true
         }
-    }]
+    }],
+    etherAccount:{
+        address:{
+            type:String
+        },
+        balance:{
+            type:String
+        }
+    },
 });
 
 const Supplier = module.exports = mongoose.model('Supplier',SupplierSchema);

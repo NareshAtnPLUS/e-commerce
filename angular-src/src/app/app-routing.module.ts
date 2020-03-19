@@ -16,6 +16,8 @@ import { AddProductsComponent } from './components/supplier/add-products/add-pro
 import { MobileComponent } from './components/supplier/add-products/mobile/mobile.component';
 import { BuyProductsComponent } from './components/buyer/buy-products/buy-products.component';
 import { CartComponent } from './components/cart/cart.component';
+import { SuppProfileComponent } from './components/supp-profile/supp-profile.component';
+import { AdminDashComponent } from './components/admin-dash/admin-dash.component';
 
 
 const routes: Routes = [
@@ -41,7 +43,9 @@ const routes: Routes = [
     { path:'login',component:LoginComponent }
     ] 
   },
-  { path:'profile',component:ProfileComponent,canActivate:[AuthGuard] }
+  { path:'profile',component:ProfileComponent,canActivate:[AuthGuard] },
+  { path:"adminDash",component:AdminDashComponent,canActivate:[AuthGuard]},
+  {path:'supplierProfile',component:SuppProfileComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({
