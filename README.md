@@ -4,4 +4,4 @@ Northwest corner rule - transportation problem
 Vogels Approximation Method
 
 
-MEANMEAN Stack Application with Ethereum
+MEAN Stack Application with Ethereum
